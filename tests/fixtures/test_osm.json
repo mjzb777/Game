@@ -1,0 +1,410 @@
+{
+ "district": "test",
+ "source": "synthetic test fixture",
+ "bbox": {
+  "south": 25.1941198,
+  "north": 25.2058802,
+  "west": 55.2935468,
+  "east": 55.3064532
+ },
+ "origin": {
+  "lat": 25.2,
+  "lon": 55.3
+ },
+ "roads": [
+  {
+   "id": "way/100",
+   "name": "Test Street 0",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.2940432
+    ],
+    [
+     25.1945721,
+     55.2940432
+    ]
+   ]
+  },
+  {
+   "id": "way/200",
+   "name": "Test Avenue 0",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.2940432
+    ],
+    [
+     25.2054279,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/101",
+   "name": "Test Street 1",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.2960288
+    ],
+    [
+     25.1945721,
+     55.2960288
+    ]
+   ]
+  },
+  {
+   "id": "way/201",
+   "name": "Test Avenue 1",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.2036186,
+     55.2940432
+    ],
+    [
+     25.2036186,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/102",
+   "name": "Test Street 2",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.2980144
+    ],
+    [
+     25.1945721,
+     55.2980144
+    ]
+   ]
+  },
+  {
+   "id": "way/202",
+   "name": "Test Avenue 2",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.2018093,
+     55.2940432
+    ],
+    [
+     25.2018093,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/103",
+   "name": "Test Street 3",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.3
+    ],
+    [
+     25.1945721,
+     55.3
+    ]
+   ]
+  },
+  {
+   "id": "way/203",
+   "name": "Test Avenue 3",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.2,
+     55.2940432
+    ],
+    [
+     25.2,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/104",
+   "name": "Test Street 4",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.3019856
+    ],
+    [
+     25.1945721,
+     55.3019856
+    ]
+   ]
+  },
+  {
+   "id": "way/204",
+   "name": "Test Avenue 4",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.1981907,
+     55.2940432
+    ],
+    [
+     25.1981907,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/105",
+   "name": "Test Street 5",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.3039712
+    ],
+    [
+     25.1945721,
+     55.3039712
+    ]
+   ]
+  },
+  {
+   "id": "way/205",
+   "name": "Test Avenue 5",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.1963814,
+     55.2940432
+    ],
+    [
+     25.1963814,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/106",
+   "name": "Test Street 6",
+   "highway": "residential",
+   "maxspeed_kmh": 40,
+   "lanes": null,
+   "oneway": false,
+   "points": [
+    [
+     25.2054279,
+     55.3059568
+    ],
+    [
+     25.1945721,
+     55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/206",
+   "name": "Test Avenue 6",
+   "highway": "primary",
+   "maxspeed_kmh": 80,
+   "lanes": 4,
+   "oneway": false,
+   "points": [
+    [
+     25.1945721,
+     55.2940432
+    ],
+    [
+     25.1945721,
+     55.3059568
+    ]
+   ]
+  }
+ ],
+ "buildings": [
+  {
+   "id": "way/300",
+   "name": "Test Block 0",
+   "height": null,
+   "levels": 5,
+   "points": [
+    [
+     25.1994572,
+     55.3005957
+    ],
+    [
+     25.1994572,
+     55.3013899
+    ],
+    [
+     25.1987335,
+     55.3013899
+    ],
+    [
+     25.1987335,
+     55.3005957
+    ]
+   ]
+  },
+  {
+   "id": "way/301",
+   "name": "Test Block 1",
+   "height": null,
+   "levels": 5,
+   "points": [
+    [
+     25.1994572,
+     55.2986101
+    ],
+    [
+     25.1994572,
+     55.2994043
+    ],
+    [
+     25.1987335,
+     55.2994043
+    ],
+    [
+     25.1987335,
+     55.2986101
+    ]
+   ]
+  },
+  {
+   "id": "way/302",
+   "name": "Test Block 2",
+   "height": null,
+   "levels": 5,
+   "points": [
+    [
+     25.2012665,
+     55.3005957
+    ],
+    [
+     25.2012665,
+     55.3013899
+    ],
+    [
+     25.2005428,
+     55.3013899
+    ],
+    [
+     25.2005428,
+     55.3005957
+    ]
+   ]
+  },
+  {
+   "id": "way/303",
+   "name": "Test Block 3",
+   "height": null,
+   "levels": 5,
+   "points": [
+    [
+     25.1976479,
+     55.3025813
+    ],
+    [
+     25.1976479,
+     55.3033755
+    ],
+    [
+     25.1969242,
+     55.3033755
+    ],
+    [
+     25.1969242,
+     55.3025813
+    ]
+   ]
+  },
+  {
+   "id": "way/399",
+   "name": "Station Over Road",
+   "kind": "train_station",
+   "height": 12,
+   "levels": null,
+   "points": [
+    [
+     25.2020807,
+     55.2998014
+    ],
+    [
+     25.2020807,
+     55.3001986
+    ],
+    [
+     25.2015379,
+     55.3001986
+    ],
+    [
+     25.2015379,
+     55.2998014
+    ]
+   ]
+  }
+ ],
+ "fuel": [
+  {
+   "id": "node/1",
+   "name": "Test Fuel",
+   "brand": "",
+   "lat": 25.2,
+   "lon": 55.3020849
+  }
+ ],
+ "pois": [
+  {
+   "id": "node/2",
+   "name": "Test Mall",
+   "name_en": "",
+   "category": "shop=mall",
+   "lat": 25.1963814,
+   "lon": 55.3019856
+  }
+ ]
+}

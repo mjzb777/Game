@@ -1,0 +1,332 @@
+{
+  "id": "umm_suqeim",
+  "name": "Umm Suqeim",
+  "bbox": {
+    "south": 25.1314,
+    "west": 55.1811,
+    "north": 25.1586,
+    "east": 55.2109
+  },
+  "spawn": {
+    "lat": 25.145,
+    "lon": 55.196,
+    "heading_deg": 0
+  },
+  "osm_file": "res://data/osm/umm_suqeim.json",
+  "missions": [
+    {
+      "id": "ums_01",
+      "type": "drive_to",
+      "title": "The Sail",
+      "description": "Drive to {target}.",
+      "npc": "Elena (tourist)",
+      "dialogue": {
+        "intro": [
+          "I've seen it on every postcard.",
+          "Please take me to {target}!"
+        ],
+        "complete": [
+          "It's even more beautiful in person."
+        ]
+      },
+      "reward": 280,
+      "target": {
+        "names": [
+          "Burj Al Arab",
+          "Burj Al Arab Jumeirah"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel",
+          "tourism=attraction"
+        ]
+      }
+    },
+    {
+      "id": "ums_02",
+      "type": "delivery",
+      "title": "Souk Spices",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Chef Karim",
+      "dialogue": {
+        "intro": [
+          "Our kitchen ran out of saffron.",
+          "Grab {item} from {pickup} and rush it to {dropoff}."
+        ],
+        "complete": [
+          "Dinner service is saved!"
+        ]
+      },
+      "reward": 380,
+      "item": "a crate of spices",
+      "pickup": {
+        "names": [
+          "Souk Madinat Jumeirah",
+          "Madinat Jumeirah"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store",
+          "tourism=hotel",
+          "building=hotel",
+          "tourism=attraction"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Jumeirah Beach Hotel"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "ums_03",
+      "type": "timed",
+      "title": "Water Park Opening",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Kids in the back",
+      "dialogue": {
+        "intro": [
+          "The slides open in a few minutes!",
+          "Get us to {target} in {time} seconds!!"
+        ],
+        "complete": [
+          "YAY! First in line!"
+        ]
+      },
+      "reward": 330,
+      "time_limit": 90,
+      "target": {
+        "names": [
+          "Wild Wadi Waterpark",
+          "Wild Wadi Water Park",
+          "Wild Wadi"
+        ],
+        "categories": [
+          "leisure=water_park",
+          "tourism=attraction"
+        ]
+      }
+    },
+    {
+      "id": "ums_04",
+      "type": "speed_limit",
+      "title": "Kids on Board",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Hind",
+      "dialogue": {
+        "intro": [
+          "My twins fall asleep if you drive gently.",
+          "Take us to {target}, under {limit} km/h please."
+        ],
+        "complete": [
+          "They're still asleep. You're a miracle worker."
+        ]
+      },
+      "reward": 260,
+      "speed_limit_kmh": 40,
+      "target": {
+        "names": [
+          "Umm Suqeim Park"
+        ],
+        "categories": [
+          "leisure=park",
+          "leisure=garden"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "ums_05",
+      "type": "delivery",
+      "title": "Wedding Dress",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Bride's sister",
+      "dialogue": {
+        "intro": [
+          "The tailor finished {item} at {pickup}.",
+          "The wedding is at {dropoff}. Hurry, but don't crease it!"
+        ],
+        "complete": [
+          "She's going to look stunning!"
+        ]
+      },
+      "reward": 500,
+      "item": "a wedding dress",
+      "pickup": {
+        "names": [
+          "Jumeirah Al Naseem"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Jumeirah Al Qasr"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "ums_06",
+      "type": "drive_to",
+      "title": "Sunset Surf",
+      "description": "Drive to {target}.",
+      "npc": "Jake",
+      "dialogue": {
+        "intro": [
+          "The waves are up today.",
+          "Drop me at {target}."
+        ],
+        "complete": [
+          "Surf's up! Cheers, mate."
+        ]
+      },
+      "reward": 180,
+      "target": {
+        "names": [
+          "Sunset Beach",
+          "Umm Suqeim Beach"
+        ],
+        "categories": [
+          "natural=beach",
+          "leisure=beach_resort"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "ums_07",
+      "type": "timed",
+      "title": "Dinner Reservation",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Mr. Lee",
+      "dialogue": {
+        "intro": [
+          "Our table at {target} is released in {time} seconds.",
+          "Please hurry!"
+        ],
+        "complete": [
+          "We kept the table. Thank you!"
+        ]
+      },
+      "reward": 400,
+      "time_limit": 70,
+      "target": {
+        "names": [
+          "Jumeirah Mina A'Salam",
+          "Mina A'Salam",
+          "Jumeirah Mina Al Salam"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "ums_08",
+      "type": "delivery",
+      "title": "Kite Festival",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Coach Ali",
+      "dialogue": {
+        "intro": [
+          "The kids' kite festival needs supplies.",
+          "Bring {item} from {pickup} to {dropoff}."
+        ],
+        "complete": [
+          "Look at them fly!"
+        ]
+      },
+      "reward": 300,
+      "item": "a bundle of kites",
+      "pickup": {
+        "names": [
+          "Kite Beach"
+        ],
+        "categories": [
+          "natural=beach",
+          "leisure=beach_resort"
+        ],
+        "allow_fallback": true
+      },
+      "dropoff": {
+        "names": [
+          "Umm Suqeim Park"
+        ],
+        "categories": [
+          "leisure=park",
+          "leisure=garden"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "ums_09",
+      "type": "speed_limit",
+      "title": "Kunafa Tray",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Auntie Salma",
+      "dialogue": {
+        "intro": [
+          "This kunafa is for a party at {target}.",
+          "Under {limit} km/h, or the syrup goes everywhere!"
+        ],
+        "complete": [
+          "Still perfect. Have a piece!"
+        ]
+      },
+      "reward": 420,
+      "speed_limit_kmh": 50,
+      "target": {
+        "names": [
+          "Madinat Jumeirah",
+          "Souk Madinat Jumeirah"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store",
+          "tourism=hotel",
+          "building=hotel",
+          "tourism=attraction"
+        ]
+      }
+    },
+    {
+      "id": "ums_10",
+      "type": "drive_to",
+      "title": "Jummah",
+      "description": "Drive to {target}.",
+      "npc": "Uncle Obaid",
+      "dialogue": {
+        "intro": [
+          "It's Friday and the khutbah starts soon.",
+          "Please drive me to {target}."
+        ],
+        "complete": [
+          "May Allah reward you."
+        ]
+      },
+      "reward": 150,
+      "target": {
+        "names": [
+          "Umm Suqeim Mosque"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=mosque"
+        ],
+        "allow_fallback": true
+      }
+    }
+  ]
+}

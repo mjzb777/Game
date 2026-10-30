@@ -1,0 +1,325 @@
+{
+  "id": "downtown",
+  "name": "Downtown Dubai",
+  "bbox": {
+    "south": 25.1824,
+    "west": 55.2611,
+    "north": 25.2096,
+    "east": 55.2909
+  },
+  "spawn": {
+    "lat": 25.196,
+    "lon": 55.276,
+    "heading_deg": 0
+  },
+  "osm_file": "res://data/osm/downtown.json",
+  "missions": [
+    {
+      "id": "dt_01",
+      "type": "drive_to",
+      "title": "Tallest in the World",
+      "description": "Drive to {target}.",
+      "npc": "Sarah (tourist)",
+      "dialogue": {
+        "intro": [
+          "I just landed and I have one wish: {target}.",
+          "Can you take me there?"
+        ],
+        "complete": [
+          "Wow, I can't even see the top! Thank you!"
+        ]
+      },
+      "reward": 250,
+      "target": {
+        "names": [
+          "Burj Khalifa"
+        ],
+        "categories": [
+          "tourism=attraction",
+          "building=commercial",
+          "building=retail"
+        ]
+      }
+    },
+    {
+      "id": "dt_02",
+      "type": "delivery",
+      "title": "Opera Night",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Khalid",
+      "dialogue": {
+        "intro": [
+          "Tonight is my wife's premiere.",
+          "Pick up {item} at {pickup} and bring it to {dropoff}."
+        ],
+        "complete": [
+          "She loved them. You saved my evening!"
+        ]
+      },
+      "reward": 400,
+      "item": "a bouquet of flowers",
+      "pickup": {
+        "names": [
+          "The Dubai Mall",
+          "Dubai Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Dubai Opera"
+        ],
+        "categories": [
+          "amenity=theatre",
+          "amenity=arts_centre"
+        ]
+      }
+    },
+    {
+      "id": "dt_03",
+      "type": "timed",
+      "title": "Fountain Show",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Priya",
+      "dialogue": {
+        "intro": [
+          "The fountain show starts any minute!",
+          "Get me to {target} in {time} seconds."
+        ],
+        "complete": [
+          "Just as the music started. Perfect timing!"
+        ]
+      },
+      "reward": 350,
+      "time_limit": 90,
+      "target": {
+        "names": [
+          "Souk Al Bahar",
+          "Souq Al Bahar"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "dt_04",
+      "type": "speed_limit",
+      "title": "Boulevard Cruise",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Mr. Hassan",
+      "dialogue": {
+        "intro": [
+          "The Boulevard is full of pedestrians tonight.",
+          "Take me to {target} and stay under {limit} km/h."
+        ],
+        "complete": [
+          "Smooth and safe. A true gentleman driver."
+        ]
+      },
+      "reward": 300,
+      "speed_limit_kmh": 40,
+      "target": {
+        "names": [
+          "Address Downtown",
+          "The Address Downtown"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "dt_05",
+      "type": "delivery",
+      "title": "Lost on the Metro",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Station Officer",
+      "dialogue": {
+        "intro": [
+          "A guest left {item} at {pickup}.",
+          "Return it to them at {dropoff}."
+        ],
+        "complete": [
+          "The guest is so relieved. Well done!"
+        ]
+      },
+      "reward": 380,
+      "item": "a lost handbag",
+      "pickup": {
+        "names": [
+          "Burj Khalifa/Dubai Mall",
+          "Burj Khalifa / Dubai Mall",
+          "Burj Khalifa Dubai Mall"
+        ],
+        "categories": [
+          "railway=station",
+          "public_transport=station"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Palace Downtown",
+          "The Palace Downtown"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "dt_06",
+      "type": "drive_to",
+      "title": "Picnic in the Park",
+      "description": "Drive to {target}.",
+      "npc": "Noura",
+      "dialogue": {
+        "intro": [
+          "We're having a picnic under the tower.",
+          "Meet us at {target}."
+        ],
+        "complete": [
+          "Grab a sandwich, you earned it."
+        ]
+      },
+      "reward": 180,
+      "target": {
+        "names": [
+          "Burj Park"
+        ],
+        "categories": [
+          "leisure=park",
+          "leisure=garden"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "dt_07",
+      "type": "timed",
+      "title": "VIP Check-in",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Concierge",
+      "dialogue": {
+        "intro": [
+          "A VIP guest is waiting in your car.",
+          "The suite is held at {target} for {time} more seconds!"
+        ],
+        "complete": [
+          "The VIP is checked in. Excellent work."
+        ]
+      },
+      "reward": 450,
+      "time_limit": 75,
+      "target": {
+        "names": [
+          "Armani Hotel Dubai",
+          "Armani Hotel"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "dt_08",
+      "type": "delivery",
+      "title": "Coffee Run",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Zayed",
+      "dialogue": {
+        "intro": [
+          "Our meeting needs coffee, now.",
+          "Pick up {item} at {pickup} and bring it to {dropoff}."
+        ],
+        "complete": [
+          "Still hot! The meeting is saved."
+        ]
+      },
+      "reward": 260,
+      "item": "a tray of coffees",
+      "pickup": {
+        "names": [
+          "Manzil Downtown"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Vida Downtown",
+          "Vida Downtown Dubai"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "dt_09",
+      "type": "speed_limit",
+      "title": "Wedding Cake",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Chef Rania",
+      "dialogue": {
+        "intro": [
+          "This five-tier cake is for a reception at {target}.",
+          "Stay under {limit} km/h or it's ruined!"
+        ],
+        "complete": [
+          "The cake survived! The bride will be thrilled."
+        ]
+      },
+      "reward": 500,
+      "speed_limit_kmh": 50,
+      "target": {
+        "names": [
+          "The Dubai Mall",
+          "Dubai Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "dt_10",
+      "type": "drive_to",
+      "title": "Prayer Time",
+      "description": "Drive to {target}.",
+      "npc": "Uncle Saif",
+      "dialogue": {
+        "intro": [
+          "The call to prayer is coming.",
+          "Please drive me to {target}."
+        ],
+        "complete": [
+          "Shukran, I made it before the iqama."
+        ]
+      },
+      "reward": 150,
+      "target": {
+        "names": [
+          "Downtown Dubai Mosque",
+          "Burj Khalifa Mosque"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=mosque"
+        ],
+        "allow_fallback": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+{
+ "id": "test",
+ "name": "Test District",
+ "bbox": {
+  "south": 25.1941198,
+  "north": 25.2058802,
+  "west": 55.2935468,
+  "east": 55.3064532
+ },
+ "spawn": {
+  "lat": 25.2,
+  "lon": 55.3,
+  "heading_deg": 0
+ },
+ "osm_file": "res://tests/fixtures/test_osm.json",
+ "missions": [
+  {
+   "id": "t_drive",
+   "type": "drive_to",
+   "title": "t_drive",
+   "description": "Test {target}",
+   "npc": "Tester",
+   "dialogue": {
+    "intro": [
+     "Hello",
+     "Go to {target}"
+    ],
+    "complete": [
+     "Done"
+    ]
+   },
+   "reward": 100,
+   "target": {
+    "names": [
+     "North Point"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "North Point",
+     "lat": 25.2036186,
+     "lon": 55.3,
+     "method": "name"
+    }
+   }
+  },
+  {
+   "id": "t_deliver",
+   "type": "delivery",
+   "title": "t_deliver",
+   "description": "Test {target}",
+   "npc": "Tester",
+   "dialogue": {
+    "intro": [
+     "Hello",
+     "Go to {target}"
+    ],
+    "complete": [
+     "Done"
+    ]
+   },
+   "reward": 200,
+   "item": "a box",
+   "pickup": {
+    "names": [
+     "Pickup Place"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Pickup Place",
+     "lat": 25.2,
+     "lon": 55.3019856,
+     "method": "name"
+    }
+   },
+   "dropoff": {
+    "names": [
+     "Dropoff Place"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Dropoff Place",
+     "lat": 25.1981907,
+     "lon": 55.2980144,
+     "method": "name"
+    }
+   }
+  },
+  {
+   "id": "t_timed",
+   "type": "timed",
+   "title": "t_timed",
+   "description": "Test {target}",
+   "npc": "Tester",
+   "dialogue": {
+    "intro": [
+     "Hello",
+     "Go to {target}"
+    ],
+    "complete": [
+     "Done"
+    ]
+   },
+   "reward": 300,
+   "time_limit": 1,
+   "target": {
+    "names": [
+     "Far Corner"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Far Corner",
+     "lat": 25.1945721,
+     "lon": 55.3059568,
+     "method": "name"
+    }
+   }
+  },
+  {
+   "id": "t_speed",
+   "type": "speed_limit",
+   "title": "t_speed",
+   "description": "Test {target}",
+   "npc": "Tester",
+   "dialogue": {
+    "intro": [
+     "Hello",
+     "Go to {target}"
+    ],
+    "complete": [
+     "Done"
+    ]
+   },
+   "reward": 400,
+   "speed_limit_kmh": 40,
+   "target": {
+    "names": [
+     "Slow Zone"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Slow Zone",
+     "lat": 25.2,
+     "lon": 55.3039712,
+     "method": "name"
+    }
+   }
+  },
+  {
+   "id": "t_unverified",
+   "type": "drive_to",
+   "title": "t_unverified",
+   "description": "Test {target}",
+   "npc": "Tester",
+   "dialogue": {
+    "intro": [
+     "Hello",
+     "Go to {target}"
+    ],
+    "complete": [
+     "Done"
+    ]
+   },
+   "reward": 50,
+   "target": {
+    "names": [
+     "Nowhere"
+    ]
+   }
+  }
+ ]
+}

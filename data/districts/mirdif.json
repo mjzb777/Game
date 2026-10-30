@@ -1,0 +1,326 @@
+{
+  "id": "mirdif",
+  "name": "Mirdif",
+  "bbox": {
+    "south": 25.2049,
+    "west": 55.4031,
+    "north": 25.2321,
+    "east": 55.4329
+  },
+  "spawn": {
+    "lat": 25.2185,
+    "lon": 55.418,
+    "heading_deg": 0
+  },
+  "osm_file": "res://data/osm/mirdif.json",
+  "missions": [
+    {
+      "id": "mir_01",
+      "type": "drive_to",
+      "title": "Mall Day",
+      "description": "Drive to {target}.",
+      "npc": "Fatima",
+      "dialogue": {
+        "intro": [
+          "Habibi, I promised the kids a trip to {target}.",
+          "Can you get there before they lose patience?"
+        ],
+        "complete": [
+          "Perfect, the kids are already running to the toy shop!"
+        ]
+      },
+      "reward": 200,
+      "target": {
+        "names": [
+          "City Centre Mirdif",
+          "Mirdif City Centre"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "mir_02",
+      "type": "delivery",
+      "title": "Weekly Groceries",
+      "description": "Pick up {item} at {pickup} and bring it to {dropoff}.",
+      "npc": "Omar",
+      "dialogue": {
+        "intro": [
+          "My mother forgot her shopping at {pickup}.",
+          "Bring {item} to {dropoff}, she's waiting there."
+        ],
+        "complete": [
+          "Shukran! She would never have carried all that."
+        ]
+      },
+      "reward": 300,
+      "item": "a bag of groceries",
+      "pickup": {
+        "names": [
+          "Uptown Mirdif"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Mirdif 35"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "mir_03",
+      "type": "timed",
+      "title": "Cinema Rush",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Rashid",
+      "dialogue": {
+        "intro": [
+          "The movie starts in a few minutes and I'm still at home!",
+          "Get me to {target} in {time} seconds!"
+        ],
+        "complete": [
+          "Just in time for the trailers. Yalla!"
+        ]
+      },
+      "reward": 350,
+      "time_limit": 90,
+      "target": {
+        "names": [
+          "Uptown Mirdif"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "mir_04",
+      "type": "speed_limit",
+      "title": "School Zone",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Ms. Aisha",
+      "dialogue": {
+        "intro": [
+          "There are children crossing all around {target}.",
+          "Bring these forms over, but keep it under {limit} km/h."
+        ],
+        "complete": [
+          "Thank you for driving carefully. The children are safe."
+        ]
+      },
+      "reward": 250,
+      "speed_limit_kmh": 40,
+      "target": {
+        "names": [
+          "Uptown International School",
+          "Mirdif Private School"
+        ],
+        "categories": [
+          "amenity=school",
+          "building=school"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "mir_05",
+      "type": "delivery",
+      "title": "Dates for the Imam",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Abu Khalid",
+      "dialogue": {
+        "intro": [
+          "Iftar is coming and the dates are at {pickup}.",
+          "Please take {item} to {dropoff}."
+        ],
+        "complete": [
+          "Jazak Allah khair. Everyone will break their fast on time."
+        ]
+      },
+      "reward": 320,
+      "item": "a box of dates",
+      "pickup": {
+        "names": [
+          "City Centre Mirdif",
+          "Mirdif City Centre"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Mirdif Mosque"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=mosque"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "mir_06",
+      "type": "drive_to",
+      "title": "Evening Walk",
+      "description": "Drive to {target}.",
+      "npc": "Layla",
+      "dialogue": {
+        "intro": [
+          "It's finally cool enough for a walk.",
+          "Meet me at {target}."
+        ],
+        "complete": [
+          "Look at that sunset. Worth the drive!"
+        ]
+      },
+      "reward": 180,
+      "target": {
+        "names": [
+          "Mirdif Park",
+          "Mushrif Park"
+        ],
+        "categories": [
+          "leisure=park",
+          "leisure=garden"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "mir_07",
+      "type": "timed",
+      "title": "Running on Fumes",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Saeed",
+      "dialogue": {
+        "intro": [
+          "My cousin ran out of petrol and is pushing his car to {target}.",
+          "Get there in {time} seconds to help him!"
+        ],
+        "complete": [
+          "You made it! He owes you a karak."
+        ]
+      },
+      "reward": 300,
+      "time_limit": 70,
+      "target": {
+        "names": [
+          "ENOC",
+          "ADNOC",
+          "Emarat"
+        ],
+        "categories": [
+          "amenity=fuel"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "mir_08",
+      "type": "delivery",
+      "title": "Shawarma Express",
+      "description": "Pick up {item} at {pickup} and bring it to {dropoff}.",
+      "npc": "Yousef",
+      "dialogue": {
+        "intro": [
+          "The football team is starving.",
+          "Collect {item} at {pickup} and bring it to {dropoff}."
+        ],
+        "complete": [
+          "The team says you're the MVP tonight!"
+        ]
+      },
+      "reward": 280,
+      "item": "a stack of shawarma wraps",
+      "pickup": {
+        "names": [
+          "Mirdif 35"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Mirdif Park",
+          "Mushrif Park"
+        ],
+        "categories": [
+          "leisure=park",
+          "leisure=garden"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "mir_09",
+      "type": "speed_limit",
+      "title": "Fragile Vase",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Mariam",
+      "dialogue": {
+        "intro": [
+          "This antique vase is for my aunt's shop at {target}.",
+          "Keep it under {limit} km/h, it's very fragile!"
+        ],
+        "complete": [
+          "Not a single crack. You are a legend."
+        ]
+      },
+      "reward": 400,
+      "speed_limit_kmh": 50,
+      "target": {
+        "names": [
+          "City Centre Mirdif",
+          "Mirdif City Centre"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "mir_10",
+      "type": "drive_to",
+      "title": "Pharmacy Stop",
+      "description": "Drive to {target}.",
+      "npc": "Grandpa Hamad",
+      "dialogue": {
+        "intro": [
+          "I need my medicine refilled.",
+          "Take me to {target}, please."
+        ],
+        "complete": [
+          "Allah yehfazak. My knees thank you."
+        ]
+      },
+      "reward": 150,
+      "target": {
+        "names": [
+          "Life Pharmacy",
+          "Aster Pharmacy",
+          "Boots"
+        ],
+        "categories": [
+          "amenity=pharmacy"
+        ],
+        "allow_fallback": true
+      }
+    }
+  ]
+}
