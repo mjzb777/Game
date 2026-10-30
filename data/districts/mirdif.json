@@ -8,9 +8,19 @@
     "east": 55.4329
   },
   "spawn": {
-    "lat": 25.2185,
-    "lon": 55.418,
-    "heading_deg": 0
+    "lat": 25.218664,
+    "lon": 55.417006,
+    "heading_deg": 1.6,
+    "road": "22b Street",
+    "osm_id": "way/445161094",
+    "hint_lat": 25.2185,
+    "hint_lon": 55.418
+  },
+  "building_defaults": {
+    "generic_m": 7.0,
+    "small_m": 6.5,
+    "large_m": 10.0,
+    "note": "Mirdif is mostly 2-storey villas; large footprints are malls and schools"
   },
   "osm_file": "res://data/osm/mirdif.json",
   "missions": [
@@ -18,264 +28,596 @@
       "id": "mir_01",
       "type": "drive_to",
       "title": "Mall Day",
-      "description": "Drive to {target}.",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
       "npc": "Fatima",
       "dialogue": {
         "intro": [
-          "Habibi, I promised the kids a trip to {target}.",
-          "Can you get there before they lose patience?"
+          "Salam! The kids have been at {start} since four and they're done with the swings.",
+          "I promised them {target} - VOX, then ice cream. Can you take us?"
         ],
         "complete": [
-          "Perfect, the kids are already running to the toy shop!"
+          "Shukran, habibi. Look at them, already running for the escalators."
         ]
       },
       "reward": 200,
+      "start": {
+        "names": [
+          "Uptown Mirdif Park"
+        ],
+        "resolved": {
+          "osm_id": "way/428655526",
+          "name": "Uptown Mirdif Park",
+          "category": "leisure=park",
+          "lat": 25.222508,
+          "lon": 55.427115,
+          "access": {
+            "lat": 25.222197,
+            "lon": 55.427726,
+            "road": "15th Street",
+            "highway": "tertiary",
+            "snap_m": 70.5
+          }
+        }
+      },
       "target": {
         "names": [
-          "City Centre Mirdif",
-          "Mirdif City Centre"
+          "Mirdif City Center"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/105359350",
+          "name": "Mirdif City Center",
+          "category": "shop=mall",
+          "lat": 25.215975,
+          "lon": 55.407169,
+          "access": {
+            "lat": 25.215995,
+            "lon": 55.406656,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 51.7
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4032,
+        "free_flow_s": 286.3,
+        "signals": 4,
+        "roads": [
+          "15th Street",
+          "Al Jeer Drive",
+          "15th Street",
+          "Algeria Street",
+          "5 Street",
+          "8th Street"
         ]
       }
     },
     {
       "id": "mir_02",
       "type": "delivery",
-      "title": "Weekly Groceries",
-      "description": "Pick up {item} at {pickup} and bring it to {dropoff}.",
-      "npc": "Omar",
+      "title": "Iftar Dates",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Abu Khalid",
       "dialogue": {
         "intro": [
-          "My mother forgot her shopping at {pickup}.",
-          "Bring {item} to {dropoff}, she's waiting there."
+          "Ramadan kareem! The mosque committee ordered {item} from {pickup}.",
+          "Maghrib is close and the iftar tent at {dropoff} is filling up. Yalla, before the adhan!"
         ],
         "complete": [
-          "Shukran! She would never have carried all that."
+          "Jazak Allah khair. Everyone breaks their fast on time tonight."
         ]
       },
       "reward": 300,
-      "item": "a bag of groceries",
+      "item": "three trays of Medjool dates",
       "pickup": {
         "names": [
-          "Uptown Mirdif"
+          "Carrefour"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "node/1925907442",
+          "name": "Carrefour",
+          "category": "shop=supermarket",
+          "lat": 25.218719,
+          "lon": 55.407425,
+          "access": {
+            "lat": 25.219198,
+            "lon": 55.407443,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 53.0
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Mirdif 35"
+          "Bilal Mosque"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "way/445161112",
+          "name": "Bilal Mosque",
+          "category": "amenity=place_of_worship",
+          "lat": 25.231228,
+          "lon": 55.417777,
+          "access": {
+            "lat": 25.231466,
+            "lon": 55.417787,
+            "road": "83rd Street",
+            "highway": "tertiary",
+            "snap_m": 26.3
+          }
+        }
+      },
+      "time_limit": 335,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 3081,
+        "free_flow_s": 191.1,
+        "signals": 1,
+        "roads": [
+          "8th Street",
+          "12th Street",
+          "83rd Street"
+        ],
+        "time_limit_rule": "ceil5(191.1 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "mir_03",
       "type": "timed",
-      "title": "Cinema Rush",
-      "description": "Reach {target} within {time} seconds.",
+      "title": "Trampoline Party",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
       "npc": "Rashid",
       "dialogue": {
         "intro": [
-          "The movie starts in a few minutes and I'm still at home!",
-          "Get me to {target} in {time} seconds!"
+          "My son's birthday party at {target} starts in a few minutes and I'm still at {start} with the goodie bags!",
+          "{time} seconds, habibi. Twelve kids are waiting and I have the cake."
         ],
         "complete": [
-          "Just in time for the trailers. Yalla!"
+          "Made it! Happy birthday, Saif! You're invited for cake."
         ]
       },
       "reward": 350,
-      "time_limit": 90,
-      "target": {
+      "start": {
         "names": [
-          "Uptown Mirdif"
+          "Park Centre"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "node/4565138662",
+          "name": "Park Centre",
+          "category": "shop=mall",
+          "lat": 25.217784,
+          "lon": 55.418412,
+          "access": {
+            "lat": 25.217773,
+            "lon": 55.418792,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 38.3
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Jump Boxx"
+        ],
+        "resolved": {
+          "osm_id": "node/4640040054",
+          "name": "Jump Boxx",
+          "category": "leisure=sports_centre",
+          "lat": 25.223879,
+          "lon": 55.426469,
+          "access": {
+            "lat": 25.224126,
+            "lon": 55.426332,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 30.6
+          }
+        }
+      },
+      "time_limit": 230,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1770,
+        "free_flow_s": 156.4,
+        "signals": 1,
+        "roads": [
+          "26b Street",
+          "29c Street",
+          "28c Street",
+          "37th street",
+          "Algeria Street",
+          "47 Street"
+        ],
+        "time_limit_rule": "ceil5(156.4 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "mir_04",
       "type": "speed_limit",
       "title": "School Zone",
-      "description": "Drive to {target} without going over {limit} km/h.",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
       "npc": "Ms. Aisha",
       "dialogue": {
         "intro": [
-          "There are children crossing all around {target}.",
-          "Bring these forms over, but keep it under {limit} km/h."
+          "I left the Grade 3 report cards in my bag at {start}.",
+          "Drop me at {target} - and keep it under {limit} km/h, there are children crossing all over Mirdif at pick-up time."
         ],
         "complete": [
-          "Thank you for driving carefully. The children are safe."
+          "Thank you for driving like a parent would. The children are safe."
         ]
       },
       "reward": 250,
       "speed_limit_kmh": 40,
+      "start": {
+        "names": [
+          "Spinneys"
+        ],
+        "resolved": {
+          "osm_id": "node/4602188399",
+          "name": "Spinneys",
+          "category": "shop=supermarket",
+          "lat": 25.225388,
+          "lon": 55.424555,
+          "access": {
+            "lat": 25.225608,
+            "lon": 55.424133,
+            "road": "Algeria Street",
+            "highway": "secondary",
+            "snap_m": 49.0
+          }
+        }
+      },
       "target": {
         "names": [
-          "Uptown International School",
-          "Mirdif Private School"
+          "Uptown School"
         ],
-        "categories": [
-          "amenity=school",
-          "building=school"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/445166111",
+          "name": "Uptown School",
+          "category": "amenity=school",
+          "lat": 25.209829,
+          "lon": 55.423024,
+          "access": {
+            "lat": 25.210218,
+            "lon": 55.422915,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 44.4
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3672,
+        "free_flow_s": 235.4,
+        "signals": 4,
+        "roads": [
+          "Algeria Street",
+          "71 Street",
+          "Algeria Street"
+        ]
       }
     },
     {
       "id": "mir_05",
       "type": "delivery",
-      "title": "Dates for the Imam",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Abu Khalid",
+      "title": "Shawarma for the Team",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Yousef",
       "dialogue": {
         "intro": [
-          "Iftar is coming and the dates are at {pickup}.",
-          "Please take {item} to {dropoff}."
+          "The under-14s just won the Mirdif cup and they're starving.",
+          "Grab {item} from {pickup} and bring it to the pitch at {dropoff}. Quick, before the coach gives them bananas!"
         ],
         "complete": [
-          "Jazak Allah khair. Everyone will break their fast on time."
+          "Wallah, you're the MVP tonight."
         ]
       },
-      "reward": 320,
-      "item": "a box of dates",
+      "reward": 280,
+      "item": "a stack of chicken shawarma",
       "pickup": {
         "names": [
-          "City Centre Mirdif",
-          "Mirdif City Centre"
+          "Shawarmaji"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "node/4426333140",
+          "name": "Shawarmaji",
+          "category": "amenity=restaurant",
+          "lat": 25.228602,
+          "lon": 55.432034,
+          "access": {
+            "lat": 25.228694,
+            "lon": 55.431821,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 23.7
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Mirdif Mosque"
+          "Mirdif Park"
         ],
-        "categories": [
-          "amenity=place_of_worship",
-          "building=mosque"
+        "resolved": {
+          "osm_id": "way/445161116",
+          "name": "Mirdif Park",
+          "category": "leisure=park",
+          "lat": 25.219563,
+          "lon": 55.418251,
+          "access": {
+            "lat": 25.220027,
+            "lon": 55.418797,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 75.2
+          }
+        }
+      },
+      "time_limit": 330,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2305,
+        "free_flow_s": 188.9,
+        "signals": 2,
+        "roads": [
+          "58c Street",
+          "47 Street",
+          "15th Street",
+          "Al Jeer Drive",
+          "15th Street",
+          "23c Street",
+          "26b Street"
         ],
-        "allow_fallback": true
+        "time_limit_rule": "ceil5(188.9 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "mir_06",
       "type": "drive_to",
       "title": "Evening Walk",
-      "description": "Drive to {target}.",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
       "npc": "Layla",
       "dialogue": {
         "intro": [
-          "It's finally cool enough for a walk.",
-          "Meet me at {target}."
+          "Finally, the weather's cooled down. I've done enough shopping at {start}.",
+          "Take me to {target} - I want to do my laps before it gets dark."
         ],
         "complete": [
-          "Look at that sunset. Worth the drive!"
+          "Look at that sunset over Mirdif. Worth it."
         ]
       },
       "reward": 180,
-      "target": {
+      "start": {
         "names": [
-          "Mirdif Park",
-          "Mushrif Park"
+          "Mirdif City Center"
         ],
         "categories": [
-          "leisure=park",
-          "leisure=garden"
+          "shop=mall",
+          "building=retail"
         ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/105359350",
+          "name": "Mirdif City Center",
+          "category": "shop=mall",
+          "lat": 25.215975,
+          "lon": 55.407169,
+          "access": {
+            "lat": 25.215995,
+            "lon": 55.406656,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 51.7
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Uptown Mirdif Park"
+        ],
+        "resolved": {
+          "osm_id": "way/428655526",
+          "name": "Uptown Mirdif Park",
+          "category": "leisure=park",
+          "lat": 25.222508,
+          "lon": 55.427115,
+          "access": {
+            "lat": 25.222197,
+            "lon": 55.427726,
+            "road": "15th Street",
+            "highway": "tertiary",
+            "snap_m": 70.5
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4315,
+        "free_flow_s": 314.5,
+        "signals": 2,
+        "roads": [
+          "8th Street",
+          "12th Street",
+          "37th street",
+          "Algeria Street",
+          "47 Street",
+          "15th Street"
+        ]
       }
     },
     {
       "id": "mir_07",
       "type": "timed",
       "title": "Running on Fumes",
-      "description": "Reach {target} within {time} seconds.",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
       "npc": "Saeed",
       "dialogue": {
         "intro": [
-          "My cousin ran out of petrol and is pushing his car to {target}.",
-          "Get there in {time} seconds to help him!"
+          "My cousin ran out of petrol on Algeria Street and he's pushing his Patrol to {target}.",
+          "Pick me up at {start} and get me there in {time} seconds - he can't push it alone!"
         ],
         "complete": [
-          "You made it! He owes you a karak."
+          "You made it. He owes you a karak, inshallah."
         ]
       },
       "reward": 300,
-      "time_limit": 70,
+      "start": {
+        "names": [
+          "Mirdif Golden Gate"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/445330565",
+          "name": "Mirdif Golden Gate",
+          "category": "shop=mall",
+          "lat": 25.228455,
+          "lon": 55.432514,
+          "access": {
+            "lat": 25.228694,
+            "lon": 55.431821,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 74.6
+          }
+        }
+      },
       "target": {
         "names": [
-          "ENOC",
-          "ADNOC",
-          "Emarat"
+          "ENOC"
         ],
         "categories": [
           "amenity=fuel"
         ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/201193951",
+          "name": "ENOC",
+          "category": "amenity=fuel",
+          "lat": 25.210838,
+          "lon": 55.416312,
+          "access": {
+            "lat": 25.210774,
+            "lon": 55.416615,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 31.3
+          }
+        }
+      },
+      "time_limit": 380,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3462,
+        "free_flow_s": 267.2,
+        "signals": 3,
+        "roads": [
+          "58c Street",
+          "47 Street",
+          "15th Street",
+          "Al Jeer Drive",
+          "15th Street",
+          "Algeria Street",
+          "5 Street"
+        ],
+        "time_limit_rule": "ceil5(267.2 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "mir_08",
       "type": "delivery",
-      "title": "Shawarma Express",
-      "description": "Pick up {item} at {pickup} and bring it to {dropoff}.",
-      "npc": "Yousef",
+      "title": "Lunchbox Rescue",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Grandma Mariam",
       "dialogue": {
         "intro": [
-          "The football team is starving.",
-          "Collect {item} at {pickup} and bring it to {dropoff}."
+          "My grandson forgot his lunch again! I bought {item} at {pickup}.",
+          "Please take it to {dropoff} before break time - that boy can't think on an empty stomach."
         ],
         "complete": [
-          "The team says you're the MVP tonight!"
+          "Alhamdulillah. Tell him his teta says eat everything."
         ]
       },
-      "reward": 280,
-      "item": "a stack of shawarma wraps",
+      "reward": 260,
+      "item": "a box of manakish",
       "pickup": {
         "names": [
-          "Mirdif 35"
+          "Arz Lebanon"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "node/4277504777",
+          "name": "Arz Lebanon",
+          "category": "amenity=restaurant",
+          "lat": 25.223777,
+          "lon": 55.42675,
+          "access": {
+            "lat": 25.223551,
+            "lon": 55.427184,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 50.3
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Mirdif Park",
-          "Mushrif Park"
+          "Ontario International Canadian School"
         ],
-        "categories": [
-          "leisure=park",
-          "leisure=garden"
+        "resolved": {
+          "osm_id": "node/4381903225",
+          "name": "Ontario International Canadian School",
+          "category": "amenity=school",
+          "lat": 25.221039,
+          "lon": 55.426349,
+          "access": {
+            "lat": 25.220812,
+            "lon": 55.426579,
+            "road": "15th Street",
+            "highway": "tertiary",
+            "snap_m": 34.1
+          }
+        }
+      },
+      "time_limit": 100,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 419,
+        "free_flow_s": 44.2,
+        "signals": 0,
+        "roads": [
+          "15th Street"
         ],
-        "allow_fallback": true
+        "time_limit_rule": "ceil5(44.2 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "mir_09",
       "type": "speed_limit",
-      "title": "Fragile Vase",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Mariam",
+      "title": "Birthday Cake",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Hessa",
       "dialogue": {
         "intro": [
-          "This antique vase is for my aunt's shop at {target}.",
-          "Keep it under {limit} km/h, it's very fragile!"
+          "The cake for my daughter's party is three tiers and the icing is still soft.",
+          "From {start} to {target}, not a kilometre over {limit} km/h, please. If it slides, I cry."
         ],
         "complete": [
           "Not a single crack. You are a legend."
@@ -283,43 +625,133 @@
       },
       "reward": 400,
       "speed_limit_kmh": 50,
-      "target": {
+      "start": {
         "names": [
-          "City Centre Mirdif",
-          "Mirdif City Centre"
+          "Mirdif City Center"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/105359350",
+          "name": "Mirdif City Center",
+          "category": "shop=mall",
+          "lat": 25.215975,
+          "lon": 55.407169,
+          "access": {
+            "lat": 25.215995,
+            "lon": 55.406656,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 51.7
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Mirdif Golden Gate"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/445330565",
+          "name": "Mirdif Golden Gate",
+          "category": "shop=mall",
+          "lat": 25.228455,
+          "lon": 55.432514,
+          "access": {
+            "lat": 25.228694,
+            "lon": 55.431821,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 74.6
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4718,
+        "free_flow_s": 342.0,
+        "signals": 3,
+        "roads": [
+          "8th Street",
+          "12th Street",
+          "37th street",
+          "Algeria Street",
+          "71 Street",
+          "58c Street"
         ]
       }
     },
     {
       "id": "mir_10",
       "type": "drive_to",
-      "title": "Pharmacy Stop",
-      "description": "Drive to {target}.",
+      "title": "Karak Stop",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
       "npc": "Grandpa Hamad",
       "dialogue": {
         "intro": [
-          "I need my medicine refilled.",
-          "Take me to {target}, please."
+          "Asr prayer at {start} was long today, my legs are tired.",
+          "Take me to {target}. A karak and a chat with my friends, that's all I need."
         ],
         "complete": [
-          "Allah yehfazak. My knees thank you."
+          "Allah yehfazak. Come, sit, have a karak with us."
         ]
       },
       "reward": 150,
+      "start": {
+        "names": [
+          "Bilal Mosque"
+        ],
+        "resolved": {
+          "osm_id": "way/445161112",
+          "name": "Bilal Mosque",
+          "category": "amenity=place_of_worship",
+          "lat": 25.231228,
+          "lon": 55.417777,
+          "access": {
+            "lat": 25.231466,
+            "lon": 55.417787,
+            "road": "83rd Street",
+            "highway": "tertiary",
+            "snap_m": 26.3
+          }
+        }
+      },
       "target": {
         "names": [
-          "Life Pharmacy",
-          "Aster Pharmacy",
-          "Boots"
+          "Filli Tea"
         ],
-        "categories": [
-          "amenity=pharmacy"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "node/4602188398",
+          "name": "Filli Tea",
+          "category": "amenity=cafe",
+          "lat": 25.223562,
+          "lon": 55.425416,
+          "access": {
+            "lat": 25.224131,
+            "lon": 55.426305,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 109.4
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2058,
+        "free_flow_s": 139.7,
+        "signals": 3,
+        "roads": [
+          "83rd Street",
+          "Algeria Street",
+          "47 Street"
+        ]
       }
     }
   ]

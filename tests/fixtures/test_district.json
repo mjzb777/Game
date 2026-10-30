@@ -30,6 +30,23 @@
     ]
    },
    "reward": 100,
+   "start": {
+    "names": [
+     "Meeting Point"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Meeting Point",
+     "lat": 25.1981907,
+     "lon": 55.3,
+     "access": {
+      "lat": 25.1981907,
+      "lon": 55.3,
+      "road": "test",
+      "snap_m": 0
+     }
+    }
+   },
    "target": {
     "names": [
      "North Point"
@@ -39,7 +56,12 @@
      "name": "North Point",
      "lat": 25.2036186,
      "lon": 55.3,
-     "method": "name"
+     "access": {
+      "lat": 25.2036186,
+      "lon": 55.3,
+      "road": "test",
+      "snap_m": 0
+     }
     }
    }
   },
@@ -69,7 +91,12 @@
      "name": "Pickup Place",
      "lat": 25.2,
      "lon": 55.3019856,
-     "method": "name"
+     "access": {
+      "lat": 25.2,
+      "lon": 55.3019856,
+      "road": "test",
+      "snap_m": 0
+     }
     }
    },
    "dropoff": {
@@ -81,9 +108,15 @@
      "name": "Dropoff Place",
      "lat": 25.1981907,
      "lon": 55.2980144,
-     "method": "name"
+     "access": {
+      "lat": 25.1981907,
+      "lon": 55.2980144,
+      "road": "test",
+      "snap_m": 0
+     }
     }
-   }
+   },
+   "time_limit": 60
   },
   {
    "id": "t_timed",
@@ -102,6 +135,23 @@
    },
    "reward": 300,
    "time_limit": 1,
+   "start": {
+    "names": [
+     "Meeting Point"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Meeting Point",
+     "lat": 25.1981907,
+     "lon": 55.3,
+     "access": {
+      "lat": 25.1981907,
+      "lon": 55.3,
+      "road": "test",
+      "snap_m": 0
+     }
+    }
+   },
    "target": {
     "names": [
      "Far Corner"
@@ -111,7 +161,12 @@
      "name": "Far Corner",
      "lat": 25.1945721,
      "lon": 55.3059568,
-     "method": "name"
+     "access": {
+      "lat": 25.1945721,
+      "lon": 55.3059568,
+      "road": "test",
+      "snap_m": 0
+     }
     }
    }
   },
@@ -132,6 +187,23 @@
    },
    "reward": 400,
    "speed_limit_kmh": 40,
+   "start": {
+    "names": [
+     "South Gate"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "South Gate",
+     "lat": 25.1963814,
+     "lon": 55.3,
+     "access": {
+      "lat": 25.1963814,
+      "lon": 55.3,
+      "road": "test",
+      "snap_m": 0
+     }
+    }
+   },
    "target": {
     "names": [
      "Slow Zone"
@@ -141,7 +213,12 @@
      "name": "Slow Zone",
      "lat": 25.2,
      "lon": 55.3039712,
-     "method": "name"
+     "access": {
+      "lat": 25.2,
+      "lon": 55.3039712,
+      "road": "test",
+      "snap_m": 0
+     }
     }
    }
   },
@@ -161,6 +238,23 @@
     ]
    },
    "reward": 50,
+   "start": {
+    "names": [
+     "Meeting Point"
+    ],
+    "resolved": {
+     "osm_id": "node/0",
+     "name": "Meeting Point",
+     "lat": 25.1981907,
+     "lon": 55.3,
+     "access": {
+      "lat": 25.1981907,
+      "lon": 55.3,
+      "road": "test",
+      "snap_m": 0
+     }
+    }
+   },
    "target": {
     "names": [
      "Nowhere"

@@ -8,9 +8,19 @@
     "east": 55.2109
   },
   "spawn": {
-    "lat": 25.145,
-    "lon": 55.196,
-    "heading_deg": 0
+    "lat": 25.144902,
+    "lon": 55.196139,
+    "heading_deg": 37.5,
+    "road": "Anyar Street",
+    "osm_id": "way/10616215",
+    "hint_lat": 25.145,
+    "hint_lon": 55.196
+  },
+  "building_defaults": {
+    "generic_m": 8.0,
+    "small_m": 7.0,
+    "large_m": 12.0,
+    "note": "Umm Suqeim is mostly villas; the big hotels are tagged in OSM"
   },
   "osm_file": "res://data/osm/umm_suqeim.json",
   "missions": [
@@ -18,27 +28,71 @@
       "id": "ums_01",
       "type": "drive_to",
       "title": "The Sail",
-      "description": "Drive to {target}.",
-      "npc": "Elena (tourist)",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Olivia",
       "dialogue": {
         "intro": [
-          "I've seen it on every postcard.",
-          "Please take me to {target}!"
+          "Honeymoon in Dubai! We've just had a walk round {start}.",
+          "Take us to {target} - we booked afternoon tea in the sail."
         ],
         "complete": [
-          "It's even more beautiful in person."
+          "We're actually here! It's even bigger up close."
         ]
       },
-      "reward": 280,
+      "reward": 220,
+      "start": {
+        "names": [
+          "Umm Suqeim Park"
+        ],
+        "resolved": {
+          "osm_id": "way/24517036",
+          "name": "Umm Suqeim Park",
+          "category": "leisure=park",
+          "lat": 25.147555,
+          "lon": 55.195648,
+          "access": {
+            "lat": 25.147447,
+            "lon": 55.196057,
+            "road": "Al Darmeet Street",
+            "highway": "residential",
+            "snap_m": 42.9
+          }
+        }
+      },
       "target": {
         "names": [
-          "Burj Al Arab",
           "Burj Al Arab Jumeirah"
         ],
         "categories": [
           "tourism=hotel",
-          "building=hotel",
-          "tourism=attraction"
+          "building=hotel"
+        ],
+        "resolved": {
+          "osm_id": "way/12700546",
+          "name": "Burj Al Arab Jumeirah",
+          "category": "tourism=hotel",
+          "lat": 25.141199,
+          "lon": 55.185555,
+          "access": {
+            "lat": 25.141024,
+            "lon": 55.185708,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 24.7
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2284,
+        "free_flow_s": 173.9,
+        "signals": 3,
+        "roads": [
+          "Al Darmeet Street",
+          "Zaglaba Street",
+          "Al Soon Street",
+          "Jumeira Street"
         ]
       }
     },
@@ -46,31 +100,41 @@
       "id": "ums_02",
       "type": "delivery",
       "title": "Souk Spices",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Chef Karim",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Chef Antonio",
       "dialogue": {
         "intro": [
-          "Our kitchen ran out of saffron.",
-          "Grab {item} from {pickup} and rush it to {dropoff}."
+          "Tonight's tasting menu needs saffron and the delivery van is late.",
+          "Collect {item} from a stall at {pickup} and bring it to the kitchen at {dropoff}."
         ],
         "complete": [
-          "Dinner service is saved!"
+          "Perfetto! The risotto is saved."
         ]
       },
-      "reward": 380,
-      "item": "a crate of spices",
+      "reward": 300,
+      "item": "a tin of Iranian saffron",
       "pickup": {
         "names": [
-          "Souk Madinat Jumeirah",
-          "Madinat Jumeirah"
+          "Souk Madinat Jumeirah"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store",
-          "tourism=hotel",
-          "building=hotel",
-          "tourism=attraction"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/202638341",
+          "name": "Souk Madinat Jumeirah",
+          "category": "shop=mall",
+          "lat": 25.133474,
+          "lon": 55.185782,
+          "access": {
+            "lat": 25.133303,
+            "lon": 55.186541,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 78.8
+          }
+        }
       },
       "dropoff": {
         "names": [
@@ -79,225 +143,555 @@
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/10316322",
+          "name": "Jumeirah Beach Hotel",
+          "category": "tourism=hotel",
+          "lat": 25.141675,
+          "lon": 55.190761,
+          "access": {
+            "lat": 25.141456,
+            "lon": 55.190925,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 29.3
+          }
+        }
+      },
+      "time_limit": 205,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 1709,
+        "free_flow_s": 110.7,
+        "signals": 3,
+        "roads": [
+          "Madinat Jumeirah",
+          "Umm Suqeim Street",
+          "Jumeira Street"
+        ],
+        "time_limit_rule": "ceil5(110.7 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "ums_03",
       "type": "timed",
       "title": "Water Park Opening",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Kids in the back",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Ahmed",
       "dialogue": {
         "intro": [
-          "The slides open in a few minutes!",
-          "Get us to {target} in {time} seconds!!"
+          "The kids want to be first on Jumeirah Sceirah when {target} opens.",
+          "We're at {start}. {time} seconds - don't let the queue beat us!"
         ],
         "complete": [
-          "YAY! First in line!"
+          "First in line! The kids are screaming already."
         ]
       },
-      "reward": 330,
-      "time_limit": 90,
-      "target": {
+      "reward": 350,
+      "start": {
         "names": [
-          "Wild Wadi Waterpark",
-          "Wild Wadi Water Park",
-          "Wild Wadi"
+          "J3 Mall"
         ],
         "categories": [
-          "leisure=water_park",
-          "tourism=attraction"
-        ]
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/500545448",
+          "name": "J3 Mall",
+          "category": "shop=mall",
+          "lat": 25.14722,
+          "lon": 55.210536,
+          "access": {
+            "lat": 25.147423,
+            "lon": 55.21022,
+            "road": "Al Wasl Road",
+            "highway": "primary",
+            "snap_m": 39.0
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Wild Wadi Waterpark"
+        ],
+        "resolved": {
+          "osm_id": "node/973423540",
+          "name": "Wild Wadi Waterpark",
+          "category": "amenity=parking_entrance",
+          "lat": 25.138505,
+          "lon": 55.188601,
+          "access": {
+            "lat": 25.138559,
+            "lon": 55.188521,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 10.0
+          }
+        }
+      },
+      "time_limit": 265,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3276,
+        "free_flow_s": 183.9,
+        "signals": 4,
+        "roads": [
+          "Al Wasl Road",
+          "Al Thanya Street",
+          "Jumeira Street"
+        ],
+        "time_limit_rule": "ceil5(183.9 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "ums_04",
       "type": "speed_limit",
       "title": "Kids on Board",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Hind",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Mama Grace",
       "dialogue": {
         "intro": [
-          "My twins fall asleep if you drive gently.",
-          "Take us to {target}, under {limit} km/h please."
+          "Four kids, one car, one trip from {start} to {target}.",
+          "Under {limit} km/h, please - Umm Suqeim's side streets are full of joggers and cyclists."
         ],
         "complete": [
-          "They're still asleep. You're a miracle worker."
+          "Everyone safe and sound. Off to the playground!"
         ]
       },
-      "reward": 260,
+      "reward": 250,
       "speed_limit_kmh": 40,
+      "start": {
+        "names": [
+          "Kings' Dubai"
+        ],
+        "resolved": {
+          "osm_id": "way/203024941",
+          "name": "Kings' Dubai",
+          "category": "amenity=school",
+          "lat": 25.135701,
+          "lon": 55.19582,
+          "access": {
+            "lat": 25.135502,
+            "lon": 55.196134,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 38.5
+          }
+        }
+      },
       "target": {
         "names": [
           "Umm Suqeim Park"
         ],
-        "categories": [
-          "leisure=park",
-          "leisure=garden"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/24517036",
+          "name": "Umm Suqeim Park",
+          "category": "leisure=park",
+          "lat": 25.147555,
+          "lon": 55.195648,
+          "access": {
+            "lat": 25.147447,
+            "lon": 55.196057,
+            "road": "Al Darmeet Street",
+            "highway": "residential",
+            "snap_m": 42.9
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2415,
+        "free_flow_s": 196.6,
+        "signals": 1,
+        "roads": [
+          "Al Yazzi Street",
+          "Al Thanya Street",
+          "Al Darmeet Street"
+        ]
       }
     },
     {
       "id": "ums_05",
       "type": "delivery",
       "title": "Wedding Dress",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Bride's sister",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Amira",
       "dialogue": {
         "intro": [
-          "The tailor finished {item} at {pickup}.",
-          "The wedding is at {dropoff}. Hurry, but don't crease it!"
+          "The bride's gown is at {pickup} and the ceremony is at {dropoff}!",
+          "Drive smooth, drive fast. {item} must arrive perfect."
         ],
         "complete": [
-          "She's going to look stunning!"
+          "She looks like a queen. Mabrook!"
         ]
       },
-      "reward": 500,
-      "item": "a wedding dress",
+      "reward": 450,
+      "item": "a wedding gown",
       "pickup": {
         "names": [
-          "Jumeirah Al Naseem"
+          "Jumeirah Marsa Al Arab"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "node/12484512893",
+          "name": "Jumeirah Marsa Al Arab",
+          "category": "tourism=hotel",
+          "lat": 25.144526,
+          "lon": 55.189571,
+          "access": {
+            "lat": 25.145001,
+            "lon": 55.189967,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 65.9
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Jumeirah Al Qasr"
+          "Hotel Madinat Jumeirah - Al Qasr"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "node/1155135639",
+          "name": "Hotel Madinat Jumeirah - Al Qasr",
+          "category": "tourism=hotel",
+          "lat": 25.131838,
+          "lon": 55.184483,
+          "access": {
+            "lat": 25.130964,
+            "lon": 55.186128,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 191.9
+          }
+        }
+      },
+      "time_limit": 385,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2750,
+        "free_flow_s": 222.3,
+        "signals": 3,
+        "roads": [
+          "Al Darmeet Street",
+          "Al Khadra Street",
+          "Doomi Street",
+          "Birouwaana Street",
+          "Thenaan Street",
+          "6a Street",
+          "Jumeira Street",
+          "Umm Suqeim Street",
+          "Madinat Jumeirah"
+        ],
+        "time_limit_rule": "ceil5(222.3 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "ums_06",
       "type": "drive_to",
-      "title": "Sunset Surf",
-      "description": "Drive to {target}.",
-      "npc": "Jake",
+      "title": "Sunset Swim",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Ravi",
       "dialogue": {
         "intro": [
-          "The waves are up today.",
-          "Drop me at {target}."
+          "I returned my books at {start}, now I'm free.",
+          "Take me to {target}. Best sunset in Dubai with the Burj Al Arab right there."
         ],
         "complete": [
-          "Surf's up! Cheers, mate."
+          "Look at that view. Thank you!"
         ]
       },
-      "reward": 180,
+      "reward": 170,
+      "start": {
+        "names": [
+          "Dubai Public Library"
+        ],
+        "resolved": {
+          "osm_id": "way/508522008",
+          "name": "Dubai Public Library",
+          "category": "amenity=library",
+          "lat": 25.151714,
+          "lon": 55.200321,
+          "access": {
+            "lat": 25.151531,
+            "lon": 55.200576,
+            "road": "Jumeira Street",
+            "highway": "primary",
+            "snap_m": 32.7
+          }
+        }
+      },
       "target": {
         "names": [
-          "Sunset Beach",
-          "Umm Suqeim Beach"
+          "Jumeirah Public Beach"
         ],
-        "categories": [
-          "natural=beach",
-          "leisure=beach_resort"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/89659245",
+          "name": "Jumeirah Public Beach",
+          "category": "natural=beach",
+          "lat": 25.148205,
+          "lon": 55.194279,
+          "access": {
+            "lat": 25.147774,
+            "lon": 55.194881,
+            "road": "Al Darmeet Street",
+            "highway": "residential",
+            "snap_m": 77.1
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 861,
+        "free_flow_s": 60.6,
+        "signals": 2,
+        "roads": [
+          "Jumeira Street",
+          "Al Soon Street",
+          "Zaglaba Street",
+          "Al Darmeet Street"
+        ]
       }
     },
     {
       "id": "ums_07",
       "type": "timed",
       "title": "Dinner Reservation",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Mr. Lee",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Mr. Fernandes",
       "dialogue": {
         "intro": [
-          "Our table at {target} is released in {time} seconds.",
-          "Please hurry!"
+          "Our anniversary dinner at {target} - the table goes in a few minutes.",
+          "Pick us up at {start}. You have {time} seconds."
         ],
         "complete": [
-          "We kept the table. Thank you!"
+          "Just in time for the abra to the restaurant. Thank you!"
         ]
       },
-      "reward": 400,
-      "time_limit": 70,
+      "reward": 380,
+      "start": {
+        "names": [
+          "Meyan Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "node/9044798505",
+          "name": "Meyan Mall",
+          "category": "shop=mall",
+          "lat": 25.14467,
+          "lon": 55.198577,
+          "access": {
+            "lat": 25.144483,
+            "lon": 55.198449,
+            "road": "Al Thanya Street",
+            "highway": "secondary",
+            "snap_m": 24.3
+          }
+        }
+      },
       "target": {
         "names": [
           "Jumeirah Mina A'Salam",
-          "Mina A'Salam",
-          "Jumeirah Mina Al Salam"
+          "Hotel Madinat Jumeirah Mina A'Salam"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/202638354",
+          "name": "Hotel Madinat Jumeirah Mina A'Salam",
+          "category": "tourism=hotel",
+          "lat": 25.135032,
+          "lon": 55.185736,
+          "access": {
+            "lat": 25.135014,
+            "lon": 55.185865,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 13.2
+          }
+        }
+      },
+      "time_limit": 180,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1942,
+        "free_flow_s": 119.6,
+        "signals": 4,
+        "roads": [
+          "Al Thanya Street",
+          "Jumeira Street"
+        ],
+        "time_limit_rule": "ceil5(119.6 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "ums_08",
       "type": "delivery",
-      "title": "Kite Festival",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Coach Ali",
+      "title": "Library Books",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Librarian Huda",
       "dialogue": {
         "intro": [
-          "The kids' kite festival needs supplies.",
-          "Bring {item} from {pickup} to {dropoff}."
+          "The reading-week box for the Year 5s is ready at {pickup}.",
+          "Please take {item} to {dropoff} - the teachers need it before the bell."
         ],
         "complete": [
-          "Look at them fly!"
+          "Thank you! The children will love the new Arabic picture books."
         ]
       },
-      "reward": 300,
-      "item": "a bundle of kites",
+      "reward": 240,
+      "item": "a crate of picture books",
       "pickup": {
         "names": [
-          "Kite Beach"
+          "Dubai Public Library"
         ],
-        "categories": [
-          "natural=beach",
-          "leisure=beach_resort"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/508522008",
+          "name": "Dubai Public Library",
+          "category": "amenity=library",
+          "lat": 25.151714,
+          "lon": 55.200321,
+          "access": {
+            "lat": 25.151531,
+            "lon": 55.200576,
+            "road": "Jumeira Street",
+            "highway": "primary",
+            "snap_m": 32.7
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Umm Suqeim Park"
+          "Raffles International School"
         ],
-        "categories": [
-          "leisure=park",
-          "leisure=garden"
+        "resolved": {
+          "osm_id": "way/203024943",
+          "name": "Raffles International School",
+          "category": "amenity=school",
+          "lat": 25.1365,
+          "lon": 55.194542,
+          "access": {
+            "lat": 25.136141,
+            "lon": 55.195075,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 66.8
+          }
+        }
+      },
+      "time_limit": 315,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2297,
+        "free_flow_s": 180.4,
+        "signals": 3,
+        "roads": [
+          "Jumeira Street",
+          "Al Thanya Street",
+          "Anyar Street",
+          "Al Marcup Street",
+          "Al Jali Street",
+          "Al Mail Street",
+          "Al Baghla Street",
+          "17b Street"
         ],
-        "allow_fallback": true
+        "time_limit_rule": "ceil5(180.4 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "ums_09",
       "type": "speed_limit",
       "title": "Kunafa Tray",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Auntie Salma",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Abu Fadi",
       "dialogue": {
         "intro": [
-          "This kunafa is for a party at {target}.",
-          "Under {limit} km/h, or the syrup goes everywhere!"
+          "A tray of hot kunafa for my nephew's shop at {target}.",
+          "From {start}, keep it under {limit} km/h - the syrup spills if you look at it wrong."
         ],
         "complete": [
-          "Still perfect. Have a piece!"
+          "Still warm, still perfect. Have a piece!"
         ]
       },
-      "reward": 420,
+      "reward": 400,
       "speed_limit_kmh": 50,
+      "start": {
+        "names": [
+          "The Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/488556619",
+          "name": "The Mall",
+          "category": "shop=mall",
+          "lat": 25.14028,
+          "lon": 55.19172,
+          "access": {
+            "lat": 25.14055,
+            "lon": 55.191328,
+            "road": "Jumeira Street",
+            "highway": "primary",
+            "snap_m": 49.6
+          }
+        }
+      },
       "target": {
         "names": [
-          "Madinat Jumeirah",
           "Souk Madinat Jumeirah"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store",
-          "tourism=hotel",
-          "building=hotel",
-          "tourism=attraction"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/202638341",
+          "name": "Souk Madinat Jumeirah",
+          "category": "shop=mall",
+          "lat": 25.133474,
+          "lon": 55.185782,
+          "access": {
+            "lat": 25.133303,
+            "lon": 55.186541,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 78.8
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1610,
+        "free_flow_s": 97.9,
+        "signals": 2,
+        "roads": [
+          "Jumeira Street",
+          "Umm Suqeim Street",
+          "Madinat Jumeirah"
         ]
       }
     },
@@ -305,27 +699,66 @@
       "id": "ums_10",
       "type": "drive_to",
       "title": "Jummah",
-      "description": "Drive to {target}.",
-      "npc": "Uncle Obaid",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Abdullah",
       "dialogue": {
         "intro": [
           "It's Friday and the khutbah starts soon.",
-          "Please drive me to {target}."
+          "Please drive me from {start} to {target}."
         ],
         "complete": [
-          "May Allah reward you."
+          "Jummah Mubarak. Barak Allah feek."
         ]
       },
-      "reward": 150,
+      "reward": 180,
+      "start": {
+        "names": [
+          "Emirates International School"
+        ],
+        "resolved": {
+          "osm_id": "way/230778790",
+          "name": "Emirates International School",
+          "category": "amenity=school",
+          "lat": 25.134739,
+          "lon": 55.210054,
+          "access": {
+            "lat": 25.134757,
+            "lon": 55.210028,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 3.3
+          }
+        }
+      },
       "target": {
         "names": [
-          "Umm Suqeim Mosque"
+          "Umm Al-Sheif Central Mosque"
         ],
-        "categories": [
-          "amenity=place_of_worship",
-          "building=mosque"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/504553056",
+          "name": "Umm Al-Sheif Central Mosque",
+          "category": "amenity=place_of_worship",
+          "lat": 25.131532,
+          "lon": 55.204288,
+          "access": {
+            "lat": 25.131701,
+            "lon": 55.204418,
+            "road": "(unnamed residential)",
+            "highway": "residential",
+            "snap_m": 22.9
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1580,
+        "free_flow_s": 193.1,
+        "signals": 0,
+        "roads": [
+          "3 Street",
+          "10a Street"
+        ]
       }
     }
   ]

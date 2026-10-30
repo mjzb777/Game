@@ -3,9 +3,12 @@ extends CanvasLayer
 ## In-game UI: speedometer, fuel, money, road info, objective, GPS arrow, timer,
 ## NPC dialogue, reward popup, mission list and pause menu. Built in code.
 
+const TOW_FEE := 150  # AED, roadside assistance tow to the nearest petrol station
+
 var car: Car
 var engine: MissionEngine
 var roads: RoadNetwork
+var enforcer: SpeedEnforcer
 var district_name := ""
 
 var _speed_label: Label
@@ -54,7 +57,7 @@ func _ready() -> void:
 	fill.bg_color = Color(0.3, 0.8, 0.3)
 	_fuel_bar.add_theme_stylebox_override("fill", fill)
 	tl.add_child(_fuel_bar)
-	_label(tl, "[M] missions  [F] refuel  [R] reset car  [Esc] pause", 13)
+	_label(tl, "[M] missions  [F] refuel  [R] back to road / tow  [Esc] pause", 13)
 
 	# Top-centre: objective, arrow, distance, timer
 	var tc := _vbox(root, Control.PRESET_CENTER_TOP, Vector2(-300, 12))
@@ -116,6 +119,8 @@ func _ready() -> void:
 	engine.mission_completed.connect(_on_completed)
 	engine.mission_failed.connect(_on_failed)
 	Game.money_changed.connect(func(_m: int) -> void: _update_money())
+	if enforcer != null:
+		enforcer.ticket_issued.connect(_on_ticket)
 	_update_money()
 
 
@@ -308,19 +313,26 @@ func _on_failed(m: Dictionary, reason: String) -> void:
 	_toast("Mission failed: %s - %s" % [m.get("title", ""), reason])
 
 
+func _on_ticket(t: Dictionary) -> void:
+	_toast("SPEEDING TICKET: %d km/h in a %d zone on %s  -AED %d" % [t["speed"], t["limit"], t["road"], t["fine"]])
+
+
 func _toast(text: String) -> void:
 	_toast_label.text = text
 	_toast_time = 4.0
 
 
+## The real petrol station whose forecourt the car is at, or {}.
 func nearest_fuel_station() -> Dictionary:
 	var parent := get_parent()
 	if parent == null or not ("fuel_stations" in parent):
 		return {}
+	var c := Vector2(car.global_position.x, car.global_position.z)
 	for f in parent.fuel_stations:
-		var p: Vector3 = f["position"]
-		if Vector2(p.x - car.global_position.x, p.z - car.global_position.z).length() < DistrictBuilder.FUEL_STATION_RADIUS:
-			return f
+		for key in ["access", "position"]:
+			var p: Vector3 = f.get(key, f["position"])
+			if Vector2(p.x, p.z).distance_to(c) < DistrictBuilder.FUEL_STATION_RADIUS:
+				return f
 	return {}
 
 
@@ -337,45 +349,90 @@ func _try_refuel() -> void:
 		_toast("Refuelled %.1f L at %s" % [bought, station["name"]])
 	elif car.fuel.liters >= car.fuel.capacity - 0.1:
 		_toast("Tank is already full")
+	elif Game.money <= 0:
+		_toast("Not enough money (balance AED %d)" % Game.money)
 	else:
 		_toast("Not enough money")
 
 
+## R: put the car back on the nearest public road, facing a legal direction.
+## With an empty tank there is no free fuel: a tow truck takes the car to the nearest
+## real petrol station for a fee, where the player buys fuel as usual.
 func _reset_car() -> void:
+	if car.fuel.is_empty():
+		_tow_to_station()
+		return
 	var p := car.global_position
-	var hit := roads.nearest(Vector2(p.x, p.z), 2000.0)
+	var hit := roads.nearest(Vector2(p.x, p.z), 2000.0, true)
 	if hit.is_empty():
 		car.place(p, Vector2(0, -1))
-	else:
-		var q: Vector2 = hit["point"]
-		car.place(Vector3(q.x, 0, q.y), hit["dir"])
-	# Never leave the player stranded: a free emergency can of fuel.
-	if car.fuel.liters < 5.0:
-		car.fuel.add(5.0 - car.fuel.liters)
-		_toast("Emergency fuel: 5 L")
+		return
+	var q: Vector2 = hit["point"]
+	var dir: Vector2 = hit["dir"]
+	var f := car.forward()
+	if not hit["oneway"] and dir.dot(Vector2(f.x, f.z)) < 0.0:
+		dir = -dir
+	car.place(Vector3(q.x, 0, q.y), dir)
+
+
+func _tow_to_station() -> void:
+	var parent := get_parent()
+	var stations: Array = parent.fuel_stations if parent != null and ("fuel_stations" in parent) else []
+	if stations.is_empty():
+		_toast("Out of fuel and no petrol station in this district")
+		return
+	var c := car.global_position
+	# Nearest station the tow truck can reach on the main road network (any, if none is).
+	var best: Dictionary = {}
+	var best_d := INF
+	for pass_i in 2:
+		for f in stations:
+			if pass_i == 0 and not f.get("on_network", true):
+				continue
+			var fa: Vector3 = f["access"]
+			if fa.distance_to(c) < best_d:
+				best_d = fa.distance_to(c)
+				best = f
+		if not best.is_empty():
+			break
+	var a: Vector3 = best["access"]
+	var hit := roads.nearest(Vector2(a.x, a.z), 60.0, true)
+	var dir := Vector2(0, -1)
+	if not hit.is_empty():
+		dir = hit["dir"]
+	car.place(a, dir)
+	Game.pay_fine(TOW_FEE)
+	_toast("Towed to %s (AED %d). Press F to refuel." % [best["name"], TOW_FEE])
 
 
 func _update_money() -> void:
 	_money_label.text = "AED %d" % Game.money
+	_money_label.add_theme_color_override("font_color", Color(1, 0.35, 0.3) if Game.money < 0 else Color.WHITE)
 
 
 func _process(delta: float) -> void:
 	if car == null:
 		return
 	_speed_label.text = "%d km/h" % int(round(car.speed_kmh()))
+	var speeding := enforcer != null and enforcer.is_speeding()
+	_speed_label.add_theme_color_override("font_color", Color(1, 0.3, 0.25) if speeding else Color.WHITE)
 	_fuel_bar.value = car.fuel.liters / car.fuel.capacity * 100.0
 	_fuel_label.text = "Fuel %.1f / %d L" % [car.fuel.liters, int(car.fuel.capacity)]
 
 	_road_query_time -= delta
 	if _road_query_time <= 0.0:
 		_road_query_time = 0.25
-		var hit := roads.nearest(Vector2(car.global_position.x, car.global_position.z), 25.0)
+		var hit: Dictionary = enforcer.road if enforcer != null else roads.nearest(Vector2(car.global_position.x, car.global_position.z), 25.0)
 		if hit.is_empty():
 			_road_label.text = "Off road"
 		else:
 			var road_name: String = hit["name"] if hit["name"] != "" else "(unnamed %s road)" % hit["highway"]
 			var limit = hit["maxspeed_kmh"]
 			_road_label.text = road_name + ("   limit %d km/h" % int(limit) if limit != null else "")
+			if hit.get("bridge", false):
+				_road_label.text += "   (bridge)"
+			elif hit.get("tunnel", false):
+				_road_label.text += "   (tunnel)"
 
 	var target = engine.objective_position()
 	_arrow.visible = target != null
@@ -396,7 +453,7 @@ func _process(delta: float) -> void:
 
 	var hint := ""
 	if car.fuel.is_empty():
-		hint = "Out of fuel! Press R for emergency fuel"
+		hint = "Out of fuel! Press R to be towed to the nearest petrol station (AED %d)" % TOW_FEE
 	elif not nearest_fuel_station().is_empty():
 		hint = "Petrol station: stop and press F to refuel (AED %.0f/L)" % car.fuel.price_per_liter
 	_hint_label.text = hint

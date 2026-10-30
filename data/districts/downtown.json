@@ -2,15 +2,28 @@
   "id": "downtown",
   "name": "Downtown Dubai",
   "bbox": {
-    "south": 25.1824,
-    "west": 55.2611,
-    "north": 25.2096,
+    "south": 25.186,
+    "west": 55.2575,
+    "north": 25.2155,
     "east": 55.2909
   },
   "spawn": {
-    "lat": 25.196,
-    "lon": 55.276,
-    "heading_deg": 0
+    "lat": 25.194504,
+    "lon": 55.279395,
+    "heading_deg": 136.0,
+    "road": "Al Yamamah Street",
+    "osm_id": "way/99567949",
+    "hint_lat": 25.196,
+    "hint_lon": 55.276
+  },
+  "building_defaults": {
+    "generic_m": 45.0,
+    "small_m": 7.0,
+    "large_m": 20.0,
+    "kinds": {
+      "construction": 30.0
+    },
+    "note": "Downtown is towers: mid-size untagged footprints default to ~14 storeys, big footprints are podiums/malls"
   },
   "osm_file": "res://data/osm/downtown.json",
   "missions": [
@@ -18,26 +31,68 @@
       "id": "dt_01",
       "type": "drive_to",
       "title": "Tallest in the World",
-      "description": "Drive to {target}.",
-      "npc": "Sarah (tourist)",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Hiroshi",
       "dialogue": {
         "intro": [
-          "I just landed and I have one wish: {target}.",
-          "Can you take me there?"
+          "First time in Dubai! My hotel is near {start}, but I can see the tower from everywhere.",
+          "Please, take me to {target}. I booked At the Top for sunset."
         ],
         "complete": [
-          "Wow, I can't even see the top! Thank you!"
+          "Sugoi... 828 metres. I need to lie down on the floor to fit it in the photo."
         ]
       },
-      "reward": 250,
+      "reward": 220,
+      "start": {
+        "names": [
+          "Al Khazzan Park"
+        ],
+        "resolved": {
+          "osm_id": "way/24517124",
+          "name": "Al Khazzan Park",
+          "category": "leisure=park",
+          "lat": 25.208816,
+          "lon": 55.264997,
+          "access": {
+            "lat": 25.209323,
+            "lon": 55.265386,
+            "road": "89 Street",
+            "highway": "residential",
+            "snap_m": 68.4
+          }
+        }
+      },
       "target": {
         "names": [
           "Burj Khalifa"
         ],
-        "categories": [
-          "tourism=attraction",
-          "building=commercial",
-          "building=retail"
+        "resolved": {
+          "osm_id": "way/446646206",
+          "name": "Burj Khalifa",
+          "category": "tourism=attraction",
+          "lat": 25.197189,
+          "lon": 55.274151,
+          "access": {
+            "lat": 25.19702,
+            "lon": 55.2737,
+            "road": "(unnamed unclassified)",
+            "highway": "unclassified",
+            "snap_m": 49.1
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2623,
+        "free_flow_s": 183.0,
+        "signals": 3,
+        "roads": [
+          "89 Street",
+          "Al Dorar Street",
+          "Al Safa Street",
+          "Financial Center Street",
+          "Sheikh Mohammed bin Rashid Boulevard"
         ]
       }
     },
@@ -45,92 +100,223 @@
       "id": "dt_02",
       "type": "delivery",
       "title": "Opera Night",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
       "npc": "Khalid",
       "dialogue": {
         "intro": [
-          "Tonight is my wife's premiere.",
-          "Pick up {item} at {pickup} and bring it to {dropoff}."
+          "The soloist left her shawl in a boutique at {pickup}. Curtain is soon!",
+          "Bring {item} to the artists' door at {dropoff}. Downtown traffic is a nightmare at this hour, so go now."
         ],
         "complete": [
-          "She loved them. You saved my evening!"
+          "Just in time. She says you saved the second act."
         ]
       },
       "reward": 400,
-      "item": "a bouquet of flowers",
+      "item": "a silk shawl",
       "pickup": {
         "names": [
-          "The Dubai Mall",
-          "Dubai Mall"
+          "The Dubai Mall"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "relation/18195959",
+          "name": "The Dubai Mall",
+          "category": "shop=mall",
+          "lat": 25.197007,
+          "lon": 55.278574,
+          "access": {
+            "lat": 25.196287,
+            "lon": 55.280648,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 223.6
+          }
+        }
       },
       "dropoff": {
         "names": [
           "Dubai Opera"
         ],
-        "categories": [
-          "amenity=theatre",
-          "amenity=arts_centre"
-        ]
+        "resolved": {
+          "osm_id": "way/475848632",
+          "name": "Dubai Opera",
+          "category": "amenity=theatre",
+          "lat": 25.195618,
+          "lon": 55.271988,
+          "access": {
+            "lat": 25.196201,
+            "lon": 55.271535,
+            "road": "(unnamed residential)",
+            "highway": "residential",
+            "snap_m": 79.0
+          }
+        }
+      },
+      "time_limit": 410,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2442,
+        "free_flow_s": 239.7,
+        "signals": 2,
+        "roads": [
+          "I",
+          "L",
+          "Al Yamamah Street",
+          "Sheikh Mohammed bin Rashid Boulevard"
+        ],
+        "time_limit_rule": "ceil5(239.7 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "dt_03",
       "type": "timed",
       "title": "Fountain Show",
-      "description": "Reach {target} within {time} seconds.",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
       "npc": "Priya",
       "dialogue": {
         "intro": [
-          "The fountain show starts any minute!",
-          "Get me to {target} in {time} seconds."
+          "My parents are visiting from Kochi and the fountain show starts soon.",
+          "I'm stuck at {start} - get me to {target} in {time} seconds so we can watch from the bridge!"
         ],
         "complete": [
-          "Just as the music started. Perfect timing!"
+          "There it goes... Amma is crying. Thank you!"
         ]
       },
       "reward": 350,
-      "time_limit": 90,
+      "start": {
+        "names": [
+          "Emirates Financial Towers"
+        ],
+        "resolved": {
+          "osm_id": "way/257454664",
+          "name": "Emirates Financial Towers",
+          "category": "building=tower",
+          "lat": 25.208392,
+          "lon": 55.276571,
+          "access": {
+            "lat": 25.208576,
+            "lon": 55.276308,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 33.4
+          }
+        }
+      },
       "target": {
         "names": [
-          "Souk Al Bahar",
-          "Souq Al Bahar"
+          "Souk Al Bahar"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "relation/1715611",
+          "name": "Souk Al Bahar",
+          "category": "shop=mall",
+          "lat": 25.194774,
+          "lon": 55.276587,
+          "access": {
+            "lat": 25.193664,
+            "lon": 55.276144,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 130.6
+          }
+        }
+      },
+      "time_limit": 500,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 5000,
+        "free_flow_s": 358.8,
+        "signals": 9,
+        "roads": [
+          "Al Sukook Street",
+          "Al Boursa Street",
+          "Al Mustaqbal Street",
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Financial Center Street",
+          "Sheikh Mohammed bin Rashid Boulevard"
+        ],
+        "time_limit_rule": "ceil5(358.8 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "dt_04",
       "type": "speed_limit",
       "title": "Boulevard Cruise",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Mr. Hassan",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Mr. Al Marri",
       "dialogue": {
         "intro": [
-          "The Boulevard is full of pedestrians tonight.",
-          "Take me to {target} and stay under {limit} km/h."
+          "My father wants to see the new towers on Sheikh Mohammed bin Rashid Boulevard.",
+          "From {start} to {target}, slowly - under {limit} km/h - so he can take it all in."
         ],
         "complete": [
-          "Smooth and safe. A true gentleman driver."
+          "He hasn't stopped talking about how this was all desert in his day."
         ]
       },
       "reward": 300,
       "speed_limit_kmh": 40,
-      "target": {
+      "start": {
         "names": [
-          "Address Downtown",
-          "The Address Downtown"
+          "Burj Khalifa / Dubai Mall"
         ],
         "categories": [
-          "tourism=hotel",
-          "building=hotel"
+          "railway=station"
+        ],
+        "resolved": {
+          "osm_id": "node/604304348",
+          "name": "Burj Khalifa / Dubai Mall",
+          "category": "railway=station",
+          "lat": 25.201437,
+          "lon": 55.269545,
+          "access": {
+            "lat": 25.201526,
+            "lon": 55.269427,
+            "road": "Metro access : Burj Khalifa / Dubai Mall station",
+            "highway": "service",
+            "snap_m": 15.4
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "The Address - Downtown Dubai"
+        ],
+        "resolved": {
+          "osm_id": "way/47515674",
+          "name": "The Address - Downtown Dubai",
+          "category": "building=retail",
+          "lat": 25.194214,
+          "lon": 55.278673,
+          "access": {
+            "lat": 25.194719,
+            "lon": 55.278999,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 64.7
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2800,
+        "free_flow_s": 233.4,
+        "signals": 5,
+        "roads": [
+          "Metro access : Burj Khalifa / Dubai Mall station",
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Financial Center Street",
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Al Yamamah Street"
         ]
       }
     },
@@ -138,158 +324,378 @@
       "id": "dt_05",
       "type": "delivery",
       "title": "Lost on the Metro",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Station Officer",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Officer Hamdan",
       "dialogue": {
         "intro": [
-          "A guest left {item} at {pickup}.",
-          "Return it to them at {dropoff}."
+          "A guest from {dropoff} left {item} on the Red Line.",
+          "The station staff at {pickup} have it. Please return it to the hotel - the guest flies tonight."
         ],
         "complete": [
-          "The guest is so relieved. Well done!"
+          "The guest is overjoyed. Dubai Police thanks you."
         ]
       },
-      "reward": 380,
-      "item": "a lost handbag",
+      "reward": 320,
+      "item": "a leather passport wallet",
       "pickup": {
         "names": [
-          "Burj Khalifa/Dubai Mall",
-          "Burj Khalifa / Dubai Mall",
-          "Burj Khalifa Dubai Mall"
+          "Burj Khalifa / Dubai Mall"
         ],
         "categories": [
-          "railway=station",
-          "public_transport=station"
-        ]
+          "railway=station"
+        ],
+        "resolved": {
+          "osm_id": "node/604304348",
+          "name": "Burj Khalifa / Dubai Mall",
+          "category": "railway=station",
+          "lat": 25.201437,
+          "lon": 55.269545,
+          "access": {
+            "lat": 25.201526,
+            "lon": 55.269427,
+            "road": "Metro access : Burj Khalifa / Dubai Mall station",
+            "highway": "service",
+            "snap_m": 15.4
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Palace Downtown",
-          "The Palace Downtown"
+          "The Palace - Downtown Dubai"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/126601134",
+          "name": "The Palace - Downtown Dubai",
+          "category": "tourism=hotel",
+          "lat": 25.193685,
+          "lon": 55.275666,
+          "access": {
+            "lat": 25.193589,
+            "lon": 55.275974,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 32.8
+          }
+        }
+      },
+      "time_limit": 475,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 3143,
+        "free_flow_s": 278.8,
+        "signals": 5,
+        "roads": [
+          "Metro access : Burj Khalifa / Dubai Mall station",
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Financial Center Street",
+          "Sheikh Mohammed bin Rashid Boulevard"
+        ],
+        "time_limit_rule": "ceil5(278.8 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "dt_06",
       "type": "drive_to",
       "title": "Picnic in the Park",
-      "description": "Drive to {target}.",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
       "npc": "Noura",
       "dialogue": {
         "intro": [
-          "We're having a picnic under the tower.",
-          "Meet us at {target}."
+          "The weather is perfect - twenty-four degrees! I'm done at {start}.",
+          "Drop me at {target}, the girls are setting up the picnic with a view of the tower."
         ],
         "complete": [
-          "Grab a sandwich, you earned it."
+          "Yalla, come join us for some luqaimat."
         ]
       },
       "reward": 180,
+      "start": {
+        "names": [
+          "Bay Avenue Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/1329019329",
+          "name": "Bay Avenue ​Mall",
+          "category": "shop=mall",
+          "lat": 25.190489,
+          "lon": 55.265654,
+          "access": {
+            "lat": 25.190734,
+            "lon": 55.265348,
+            "road": "(unnamed unclassified)",
+            "highway": "unclassified",
+            "snap_m": 41.0
+          }
+        }
+      },
       "target": {
         "names": [
           "Burj Park"
         ],
-        "categories": [
-          "leisure=park",
-          "leisure=garden"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/169309443",
+          "name": "Burj Park",
+          "category": "leisure=park",
+          "lat": 25.194182,
+          "lon": 55.273424,
+          "access": {
+            "lat": 25.193707,
+            "lon": 55.272504,
+            "road": "(unnamed residential)",
+            "highway": "residential",
+            "snap_m": 106.5
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2055,
+        "free_flow_s": 146.5,
+        "signals": 4,
+        "roads": [
+          "Al Mustaqbal Street",
+          "Burj Khalifa Street",
+          "AL Alam Street"
+        ]
       }
     },
     {
       "id": "dt_07",
       "type": "timed",
       "title": "VIP Check-in",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Concierge",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Concierge Daniel",
       "dialogue": {
         "intro": [
-          "A VIP guest is waiting in your car.",
-          "The suite is held at {target} for {time} more seconds!"
+          "A VIP has to sign in at {target} and the motorcade broke down.",
+          "Pick me up at {start}. You have {time} seconds, and Financial Centre Road will not be kind."
         ],
         "complete": [
-          "The VIP is checked in. Excellent work."
+          "Checked in with a minute to spare. Signor Armani would approve."
         ]
       },
       "reward": 450,
-      "time_limit": 75,
-      "target": {
+      "start": {
         "names": [
-          "Armani Hotel Dubai",
-          "Armani Hotel"
+          "Shangri La"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/125848292",
+          "name": "Shangri La",
+          "category": "tourism=hotel",
+          "lat": 25.208057,
+          "lon": 55.272004,
+          "access": {
+            "lat": 25.207971,
+            "lon": 55.272155,
+            "road": "(unnamed tertiary)",
+            "highway": "tertiary",
+            "snap_m": 17.9
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Armani Hotel"
+        ],
+        "resolved": {
+          "osm_id": "node/2246385172",
+          "name": "Armani Hotel",
+          "category": "tourism=hotel",
+          "lat": 25.197459,
+          "lon": 55.274731,
+          "access": {
+            "lat": 25.197761,
+            "lon": 55.274527,
+            "road": "(unnamed unclassified)",
+            "highway": "unclassified",
+            "snap_m": 39.2
+          }
+        }
+      },
+      "time_limit": 395,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3784,
+        "free_flow_s": 279.7,
+        "signals": 5,
+        "roads": [
+          "Al Badaa' Street",
+          "83b Street",
+          "Al Dorar Street",
+          "Al Safa Street",
+          "Financial Center Street",
+          "Sheikh Mohammed bin Rashid Boulevard"
+        ],
+        "time_limit_rule": "ceil5(279.7 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "dt_08",
       "type": "delivery",
       "title": "Coffee Run",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Zayed",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Sara",
       "dialogue": {
         "intro": [
-          "Our meeting needs coffee, now.",
-          "Pick up {item} at {pickup} and bring it to {dropoff}."
+          "Board meeting in ten minutes and the coffee machine at {dropoff} just died.",
+          "Collect {item} from the lobby cafe at {pickup}. Hot, please!"
         ],
         "complete": [
-          "Still hot! The meeting is saved."
+          "Still hot! The board doesn't need to know."
         ]
       },
-      "reward": 260,
-      "item": "a tray of coffees",
+      "reward": 220,
+      "item": "twelve flat whites",
       "pickup": {
         "names": [
-          "Manzil Downtown"
+          "Al Manzil"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/126601133",
+          "name": "Al Manzil",
+          "category": "tourism=hotel",
+          "lat": 25.191165,
+          "lon": 55.277705,
+          "access": {
+            "lat": 25.191342,
+            "lon": 55.277943,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 30.9
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Vida Downtown",
-          "Vida Downtown Dubai"
+          "Vida Downtown Dubai Hotel"
         ],
-        "categories": [
-          "tourism=hotel",
-          "building=hotel"
-        ]
+        "resolved": {
+          "osm_id": "way/532833847",
+          "name": "Vida Downtown Dubai Hotel",
+          "category": "tourism=hotel",
+          "lat": 25.190154,
+          "lon": 55.274521,
+          "access": {
+            "lat": 25.189887,
+            "lon": 55.27446,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 30.1
+          }
+        }
+      },
+      "time_limit": 275,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2100,
+        "free_flow_s": 154.6,
+        "signals": 1,
+        "roads": [
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Al Yamamah Street",
+          "Al Ohood Street",
+          "Burj Khalifa Street",
+          "AL Alam Street"
+        ],
+        "time_limit_rule": "ceil5(154.6 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "dt_09",
       "type": "speed_limit",
       "title": "Wedding Cake",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Chef Rania",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Chef Rami",
       "dialogue": {
         "intro": [
-          "This five-tier cake is for a reception at {target}.",
-          "Stay under {limit} km/h or it's ruined!"
+          "Five tiers of pistachio and rose, for a wedding at the mall's events hall.",
+          "From {start} to {target}, keep it under {limit} km/h. One pothole and my career is over."
         ],
         "complete": [
-          "The cake survived! The bride will be thrilled."
+          "Perfect. Not one sugar flower out of place. Mabrook to the couple!"
         ]
       },
-      "reward": 500,
+      "reward": 450,
       "speed_limit_kmh": 50,
+      "start": {
+        "names": [
+          "Taj Dubai Hotel"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ],
+        "resolved": {
+          "osm_id": "way/399869762",
+          "name": "Taj Dubai Hotel",
+          "category": "tourism=hotel",
+          "lat": 25.192357,
+          "lon": 55.267231,
+          "access": {
+            "lat": 25.19249,
+            "lon": 55.267354,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 19.2
+          }
+        }
+      },
       "target": {
         "names": [
-          "The Dubai Mall",
-          "Dubai Mall"
+          "The Dubai Mall"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "relation/18195959",
+          "name": "The Dubai Mall",
+          "category": "shop=mall",
+          "lat": 25.197007,
+          "lon": 55.278574,
+          "access": {
+            "lat": 25.196287,
+            "lon": 55.280648,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 223.6
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2218,
+        "free_flow_s": 203.1,
+        "signals": 3,
+        "roads": [
+          "Burj Khalifa Street",
+          "AL Alam Street",
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "Al Yamamah Street",
+          "J"
         ]
       }
     },
@@ -297,29 +703,69 @@
       "id": "dt_10",
       "type": "drive_to",
       "title": "Prayer Time",
-      "description": "Drive to {target}.",
-      "npc": "Uncle Saif",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Uncle Saleh",
       "dialogue": {
         "intro": [
-          "The call to prayer is coming.",
-          "Please drive me to {target}."
+          "The show at {start} ran long and Isha is coming.",
+          "Please take me to {target} - it's the closest masjid from here."
         ],
         "complete": [
-          "Shukran, I made it before the iqama."
+          "Barak Allah feek. I'll make it for the jama'a."
         ]
       },
-      "reward": 150,
+      "reward": 180,
+      "start": {
+        "names": [
+          "Dubai Opera"
+        ],
+        "resolved": {
+          "osm_id": "way/475848632",
+          "name": "Dubai Opera",
+          "category": "amenity=theatre",
+          "lat": 25.195618,
+          "lon": 55.271988,
+          "access": {
+            "lat": 25.196201,
+            "lon": 55.271535,
+            "road": "(unnamed residential)",
+            "highway": "residential",
+            "snap_m": 79.0
+          }
+        }
+      },
       "target": {
         "names": [
-          "Downtown Dubai Mosque",
-          "Burj Khalifa Mosque"
+          "Masjid Al Ghafoor"
         ],
-        "categories": [
-          "amenity=place_of_worship",
-          "building=mosque"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/437668921",
+          "name": "Masjid Al Ghafoor",
+          "category": "amenity=place_of_worship",
+          "lat": 25.188728,
+          "lon": 55.273299,
+          "access": {
+            "lat": 25.188572,
+            "lon": 55.273548,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 30.4
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2665,
+        "free_flow_s": 217.8,
+        "signals": 5,
+        "roads": [
+          "Sheikh Mohammed bin Rashid Boulevard",
+          "AL Alam Street",
+          "Burj Khalifa Street"
+        ]
       }
     }
-  ]
+  ],
+  "bbox_note": "Shifted north-west from the 3x3 km box so the district includes real petrol stations (ENOC Al Badaa St and ENOC Al Safa St); the 3x3 km box had none."
 }

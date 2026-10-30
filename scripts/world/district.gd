@@ -16,6 +16,7 @@ var fuel_stations: Array = []
 var car: Car
 var camera: ChaseCamera
 var missions: MissionEngine
+var enforcer: SpeedEnforcer
 var hud: Hud
 var load_error := ""
 
@@ -59,10 +60,17 @@ func _ready() -> void:
 	add_child(missions)
 	missions.setup(district, geo, roads, car)
 
+	enforcer = SpeedEnforcer.new()
+	enforcer.name = "SpeedEnforcer"
+	enforcer.car = car
+	enforcer.roads = roads
+	add_child(enforcer)
+
 	hud = Hud.new()
 	hud.car = car
 	hud.engine = missions
 	hud.roads = roads
+	hud.enforcer = enforcer
 	hud.district_name = str(district.get("name", district_id))
 	add_child(hud)
 	if not load_error.is_empty():
@@ -80,16 +88,22 @@ func _origin(osm: Variant) -> Vector2:
 	return Vector2(s["lat"], s["lon"])
 
 
+## The spawn in the data file is already on a real road (tools/resolve_missions.py);
+## snapping again to the nearest drivable road keeps old or hand-edited files safe.
+## One-way roads always face their legal direction.
 func _place_at_spawn() -> void:
 	var s: Dictionary = district.get("spawn", {})
 	var pos := geo.to_local(s.get("lat", geo.origin_lat), s.get("lon", geo.origin_lon))
 	var heading := deg_to_rad(float(s.get("heading_deg", 0.0)))
 	var dir := Vector2(sin(heading), -cos(heading))  # 0 deg = north
-	var hit := roads.nearest(Vector2(pos.x, pos.z), 1500.0)
+	var hit := roads.nearest(Vector2(pos.x, pos.z), 1500.0, true)
+	if hit.is_empty():
+		hit = roads.nearest(Vector2(pos.x, pos.z), 1500.0)
 	if not hit.is_empty():
 		var q: Vector2 = hit["point"]
 		pos = Vector3(q.x, 0, q.y)
-		dir = hit["dir"] if hit["dir"].dot(dir) >= 0.0 else -hit["dir"]
+		var road_dir: Vector2 = hit["dir"]
+		dir = road_dir if hit["oneway"] or road_dir.dot(dir) >= 0.0 else -road_dir
 	car.place(pos, dir)
 
 

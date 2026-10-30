@@ -109,7 +109,7 @@ func _physics_process(delta: float) -> void:
 		if absf(along) < absf(speed):
 			speed = along
 	var moved := Vector2(global_position.x - before.x, global_position.z - before.z).length()
-	fuel.consume(moved, throttle)
+	fuel.consume(moved, throttle, speed_kmh(), delta)
 
 
 ## Places the car on the ground at pos, facing dir (in the X/Z plane), stopped.

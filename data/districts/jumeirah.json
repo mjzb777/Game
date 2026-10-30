@@ -8,9 +8,19 @@
     "east": 55.2749
   },
   "spawn": {
-    "lat": 25.228,
-    "lon": 55.26,
-    "heading_deg": 0
+    "lat": 25.227876,
+    "lon": 55.259881,
+    "heading_deg": 311.2,
+    "road": "39b Street",
+    "osm_id": "way/613945490",
+    "hint_lat": 25.228,
+    "hint_lon": 55.26
+  },
+  "building_defaults": {
+    "generic_m": 8.0,
+    "small_m": 7.0,
+    "large_m": 10.0,
+    "note": "Jumeirah 1/2 is mostly villas and low malls"
   },
   "osm_file": "res://data/osm/jumeirah.json",
   "missions": [
@@ -18,25 +28,75 @@
       "id": "jum_01",
       "type": "drive_to",
       "title": "Open Doors",
-      "description": "Drive to {target}.",
-      "npc": "Guide Ahmed",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Emma",
       "dialogue": {
         "intro": [
-          "Our cultural tour starts at {target}.",
-          "Please drive there to meet the group."
+          "I signed up for the 'Open Doors, Open Minds' tour at {target}.",
+          "I'm at {start} - can you get me there? It's the most beautiful mosque in Jumeirah, they say."
         ],
         "complete": [
-          "Welcome! The tour is about to begin."
+          "Wow, the guide is serving gahwa and dates. Thank you!"
         ]
       },
-      "reward": 220,
+      "reward": 200,
+      "start": {
+        "names": [
+          "Century Plaza"
+        ],
+        "categories": [
+          "shop=mall",
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/230629134",
+          "name": "Century Plaza",
+          "category": "shop=mall",
+          "lat": 25.228281,
+          "lon": 55.261432,
+          "access": {
+            "lat": 25.228151,
+            "lon": 55.261641,
+            "road": "10c Street",
+            "highway": "residential",
+            "snap_m": 25.5
+          }
+        }
+      },
       "target": {
         "names": [
           "Jumeirah Mosque"
         ],
         "categories": [
-          "amenity=place_of_worship",
-          "building=mosque"
+          "tourism=attraction",
+          "amenity=place_of_worship"
+        ],
+        "resolved": {
+          "osm_id": "way/217936504",
+          "name": "Jumeirah Mosque",
+          "category": "tourism=attraction",
+          "lat": 25.233949,
+          "lon": 55.265501,
+          "access": {
+            "lat": 25.233951,
+            "lon": 55.265827,
+            "road": "11th Street",
+            "highway": "residential",
+            "snap_m": 32.8
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 957,
+        "free_flow_s": 66.1,
+        "signals": 3,
+        "roads": [
+          "10c Street",
+          "Jumeira Street",
+          "17b Street",
+          "11th Street"
         ]
       }
     },
@@ -44,93 +104,220 @@
       "id": "jum_02",
       "type": "delivery",
       "title": "Archive Photos",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Curator Hessa",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Dr. Salma",
       "dialogue": {
         "intro": [
-          "A collector dropped off {item} at {pickup}.",
-          "Bring them to {dropoff} for the new exhibition."
+          "The photo studio at {pickup} restored our prints of the 1971 signing.",
+          "Please bring {item} to {dropoff} - the curators are waiting to hang them."
         ],
         "complete": [
-          "These will look wonderful on the wall."
+          "Beautiful. Union House the day the UAE was born. Thank you."
         ]
       },
-      "reward": 400,
-      "item": "framed archive photographs",
+      "reward": 380,
+      "item": "a portfolio of archive photos",
       "pickup": {
         "names": [
-          "Mercato Shopping Mall",
-          "Mercato Mall",
-          "Mercato"
+          "Jumeirah Center"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/230629136",
+          "name": "Jumeirah Center",
+          "category": "shop=mall",
+          "lat": 25.230716,
+          "lon": 55.262946,
+          "access": {
+            "lat": 25.230882,
+            "lon": 55.262685,
+            "road": "Jumeira Street",
+            "highway": "primary",
+            "snap_m": 32.0
+          }
+        }
       },
       "dropoff": {
         "names": [
           "Etihad Museum"
         ],
-        "categories": [
-          "tourism=museum"
-        ]
+        "resolved": {
+          "osm_id": "node/5332056385",
+          "name": "Etihad Museum",
+          "category": "tourism=museum",
+          "lat": 25.241433,
+          "lon": 55.269331,
+          "access": {
+            "lat": 25.240552,
+            "lon": 55.269568,
+            "road": "2nd December Street",
+            "highway": "primary",
+            "snap_m": 100.3
+          }
+        }
+      },
+      "time_limit": 135,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 1294,
+        "free_flow_s": 66.7,
+        "signals": 4,
+        "roads": [
+          "Jumeira Street",
+          "2nd December Street"
+        ],
+        "time_limit_rule": "ceil5(66.7 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "jum_03",
       "type": "timed",
-      "title": "Beach Sunset",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Dana",
+      "title": "Sunset at La Mer",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Zayed",
       "dialogue": {
         "intro": [
-          "The sun is setting and I want the perfect photo.",
-          "Get to {target} in {time} seconds!"
+          "I'm proposing to Maryam at sunset at {target}!",
+          "The ring is with me at {start}. {time} seconds, bro, the sun won't wait!"
         ],
         "complete": [
-          "Golden hour! Thank you!"
+          "She said yes! Mabrook to us!"
         ]
       },
-      "reward": 330,
-      "time_limit": 100,
+      "reward": 350,
+      "start": {
+        "names": [
+          "Al Wasl Park"
+        ],
+        "resolved": {
+          "osm_id": "way/230622240",
+          "name": "Al Wasl Park",
+          "category": "leisure=park",
+          "lat": 25.222593,
+          "lon": 55.265921,
+          "access": {
+            "lat": 25.222336,
+            "lon": 55.266333,
+            "road": "6c Street",
+            "highway": "residential",
+            "snap_m": 50.3
+          }
+        }
+      },
       "target": {
         "names": [
-          "La Mer"
+          "La Mer Beach"
         ],
-        "categories": [
-          "tourism=attraction",
-          "shop=mall",
-          "natural=beach",
-          "leisure=beach_resort"
-        ]
+        "resolved": {
+          "osm_id": "way/509577649",
+          "name": "La Mer Beach",
+          "category": "natural=beach",
+          "lat": 25.231695,
+          "lon": 55.258681,
+          "access": {
+            "lat": 25.230885,
+            "lon": 55.259996,
+            "road": "(unnamed residential)",
+            "highway": "residential",
+            "snap_m": 159.9
+          }
+        }
+      },
+      "time_limit": 320,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2380,
+        "free_flow_s": 222.7,
+        "signals": 3,
+        "roads": [
+          "6c Street",
+          "Al Ebdaa' Street",
+          "Al Wasl Road",
+          "39b Street",
+          "Jumeira Street",
+          "2a Street"
+        ],
+        "time_limit_rule": "ceil5(222.7 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "jum_04",
       "type": "speed_limit",
-      "title": "Slow Through Jumeirah",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Officer Majid",
+      "title": "School Run",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Ms. Claire",
       "dialogue": {
         "intro": [
-          "There have been complaints about speeding.",
-          "Drive to {target} and show me you can stay under {limit} km/h."
+          "Sports day at {target} and I'm bringing the medals.",
+          "From {start}, keep it under {limit} km/h - Jumeirah's side streets are full of kids on scooters."
         ],
         "complete": [
-          "Exemplary driving. Keep it up."
+          "Medals delivered, nobody hurt. Gold medal driving!"
         ]
       },
-      "reward": 280,
+      "reward": 250,
       "speed_limit_kmh": 40,
-      "target": {
+      "start": {
         "names": [
-          "Village Mall",
-          "The Village Mall"
+          "Town Centre Jumeirah"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/102844109",
+          "name": "Town Centre Jumeirah",
+          "category": "shop=mall",
+          "lat": 25.215124,
+          "lon": 55.251207,
+          "access": {
+            "lat": 25.215368,
+            "lon": 55.251449,
+            "road": "75b Street",
+            "highway": "residential",
+            "snap_m": 36.4
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Jumeirah Baccalaureate School"
+        ],
+        "resolved": {
+          "osm_id": "way/230604888",
+          "name": "Jumeirah Baccalaureate School",
+          "category": "amenity=school",
+          "lat": 25.218722,
+          "lon": 55.25973,
+          "access": {
+            "lat": 25.219082,
+            "lon": 55.259142,
+            "road": "26c Street",
+            "highway": "residential",
+            "snap_m": 71.3
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1252,
+        "free_flow_s": 102.8,
+        "signals": 1,
+        "roads": [
+          "75b Street",
+          "Jumeira Street",
+          "8a Street",
+          "61b Street",
+          "20b Street",
+          "59 a Street",
+          "26c Street"
         ]
       }
     },
@@ -138,158 +325,371 @@
       "id": "jum_05",
       "type": "delivery",
       "title": "Book Club",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Amina",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Aunty Rania",
       "dialogue": {
         "intro": [
-          "Our book club ordered {item}.",
-          "They are at {pickup}; bring them to {dropoff}."
+          "Our book club meets at {dropoff} and I left {item} at {pickup}.",
+          "Be a dear and bring them over - and don't let the croissants get cold."
         ],
         "complete": [
-          "Next month's reading is sorted!"
+          "Perfect timing, we were just about to start chapter six."
         ]
       },
-      "reward": 300,
-      "item": "boxes of books",
+      "reward": 260,
+      "item": "a bag of novels and croissants",
       "pickup": {
         "names": [
           "Jumeirah Plaza"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/230629135",
+          "name": "Jumeirah Plaza",
+          "category": "shop=mall",
+          "lat": 25.229464,
+          "lon": 55.262051,
+          "access": {
+            "lat": 25.229641,
+            "lon": 55.261761,
+            "road": "Jumeira Street",
+            "highway": "primary",
+            "snap_m": 35.1
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Palm Strip",
-          "Palm Strip Mall"
+          "The Lime Tree Cafe - Jumeirah 1",
+          "The Lime Tree Cafe"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "node/2627756796",
+          "name": "The Lime Tree Cafe",
+          "category": "amenity=cafe",
+          "lat": 25.232144,
+          "lon": 55.264136,
+          "access": {
+            "lat": 25.232215,
+            "lon": 55.264019,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 14.2
+          }
+        }
+      },
+      "time_limit": 110,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 570,
+        "free_flow_s": 52.4,
+        "signals": 1,
+        "roads": [
+          "Jumeira Street"
+        ],
+        "time_limit_rule": "ceil5(52.4 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "jum_06",
       "type": "drive_to",
       "title": "Swim Time",
-      "description": "Drive to {target}.",
-      "npc": "Max",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Joseph",
       "dialogue": {
         "intro": [
-          "The water is perfect today.",
-          "Let's go to {target}."
+          "Day off! Just got off the bus at {start}.",
+          "Take me to {target}. Free beach, cold water, view of the Burj Al Arab down the coast."
         ],
         "complete": [
-          "Last one in buys ice cream!"
+          "Paradise. See you in the water."
         ]
       },
-      "reward": 180,
+      "reward": 170,
+      "start": {
+        "names": [
+          "Al Satwa Bus Station"
+        ],
+        "resolved": {
+          "osm_id": "way/1116427953",
+          "name": "Al Satwa Bus Station",
+          "category": "amenity=bus_station",
+          "lat": 25.228567,
+          "lon": 55.274466,
+          "access": {
+            "lat": 25.228749,
+            "lon": 55.274165,
+            "road": "Al Satwa Road",
+            "highway": "secondary",
+            "snap_m": 36.3
+          }
+        }
+      },
       "target": {
         "names": [
-          "Jumeirah Public Beach",
-          "Jumeirah Open Beach",
-          "Jumeirah Beach"
+          "Mercato Beach"
         ],
-        "categories": [
-          "natural=beach",
-          "leisure=beach_resort"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/89560399",
+          "name": "Mercato Beach",
+          "category": "natural=beach",
+          "lat": 25.217025,
+          "lon": 55.249355,
+          "access": {
+            "lat": 25.216397,
+            "lon": 55.24972,
+            "road": "75a Street",
+            "highway": "residential",
+            "snap_m": 78.5
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4043,
+        "free_flow_s": 261.3,
+        "signals": 8,
+        "roads": [
+          "Al Satwa Road",
+          "25 Street",
+          "Al Hudaiba Street",
+          "Al Wasl Road",
+          "39b Street",
+          "Jumeira Street",
+          "75a Street"
+        ]
       }
     },
     {
       "id": "jum_07",
       "type": "timed",
       "title": "Closing Time",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Reem",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Hamad",
       "dialogue": {
         "intro": [
-          "My order is waiting at {target} and the shop closes soon.",
-          "You have {time} seconds!"
+          "My wife's birthday gift is on hold at {target} and the shop closes soon.",
+          "I'm stuck at {start}. {time} seconds, ya akhi, or I'm sleeping on the couch."
         ],
         "complete": [
-          "Got it right before the shutters came down."
+          "Got it! The shopkeeper waited for me. Alhamdulillah."
         ]
       },
-      "reward": 350,
-      "time_limit": 80,
+      "reward": 320,
+      "start": {
+        "names": [
+          "Etihad Museum"
+        ],
+        "resolved": {
+          "osm_id": "node/5332056385",
+          "name": "Etihad Museum",
+          "category": "tourism=museum",
+          "lat": 25.241433,
+          "lon": 55.269331,
+          "access": {
+            "lat": 25.240552,
+            "lon": 55.269568,
+            "road": "2nd December Street",
+            "highway": "primary",
+            "snap_m": 100.3
+          }
+        }
+      },
       "target": {
         "names": [
-          "Mercato Shopping Mall",
-          "Mercato Mall",
-          "Mercato"
+          "Mercato Shopping Mall"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
-        ]
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "way/40922155",
+          "name": "Mercato Shopping Mall",
+          "category": "building=retail",
+          "lat": 25.2164,
+          "lon": 55.253036,
+          "access": {
+            "lat": 25.216922,
+            "lon": 55.253428,
+            "road": "69a Street",
+            "highway": "residential",
+            "snap_m": 69.9
+          }
+        }
+      },
+      "time_limit": 290,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3248,
+        "free_flow_s": 203.7,
+        "signals": 6,
+        "roads": [
+          "2nd December Street",
+          "Jumeira Street",
+          "2nd December Street",
+          "Jumeira Street",
+          "51st Street",
+          "8a Street",
+          "69a Street"
+        ],
+        "time_limit_rule": "ceil5(203.7 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "jum_08",
       "type": "delivery",
       "title": "Visitor Guides",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Guide Ahmed",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Mohammed",
       "dialogue": {
         "intro": [
-          "We ran out of guidebooks.",
-          "The printer left {item} at {pickup}; bring them to {dropoff}."
+          "Tour groups from the museum go on to the mosque, and they ran out of maps.",
+          "Take {item} from {pickup} to {dropoff}, please."
         ],
         "complete": [
-          "The visitors can follow along now. Thank you!"
+          "The tourists are happy. Shukran!"
         ]
       },
-      "reward": 320,
-      "item": "a box of visitor guidebooks",
+      "reward": 280,
+      "item": "a box of visitor guides",
       "pickup": {
         "names": [
-          "La Mer"
+          "Etihad Museum"
         ],
-        "categories": [
-          "tourism=attraction",
-          "shop=mall",
-          "natural=beach",
-          "leisure=beach_resort"
-        ]
+        "resolved": {
+          "osm_id": "node/5332056385",
+          "name": "Etihad Museum",
+          "category": "tourism=museum",
+          "lat": 25.241433,
+          "lon": 55.269331,
+          "access": {
+            "lat": 25.240552,
+            "lon": 55.269568,
+            "road": "2nd December Street",
+            "highway": "primary",
+            "snap_m": 100.3
+          }
+        }
       },
       "dropoff": {
         "names": [
           "Jumeirah Mosque"
         ],
         "categories": [
-          "amenity=place_of_worship",
-          "building=mosque"
-        ]
+          "tourism=attraction",
+          "amenity=place_of_worship"
+        ],
+        "resolved": {
+          "osm_id": "way/217936504",
+          "name": "Jumeirah Mosque",
+          "category": "tourism=attraction",
+          "lat": 25.233949,
+          "lon": 55.265501,
+          "access": {
+            "lat": 25.233951,
+            "lon": 55.265827,
+            "road": "11th Street",
+            "highway": "residential",
+            "snap_m": 32.8
+          }
+        }
+      },
+      "time_limit": 160,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 1473,
+        "free_flow_s": 84.0,
+        "signals": 3,
+        "roads": [
+          "2nd December Street",
+          "Jumeira Street",
+          "2nd December Street",
+          "Jumeira Street",
+          "2a Street",
+          "Jumeira Street",
+          "17b Street",
+          "11th Street"
+        ],
+        "time_limit_rule": "ceil5(84.0 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "jum_09",
       "type": "speed_limit",
       "title": "Delicate Exhibit",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Curator Hessa",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Curator Leila",
       "dialogue": {
         "intro": [
-          "This 1971 document is priceless.",
-          "Take it to {target}, never faster than {limit} km/h."
+          "A loaned pearl-diving chest must go from {start} to {target}.",
+          "It's two hundred years old. Under {limit} km/h, no sudden braking."
         ],
         "complete": [
-          "History is safe thanks to you."
+          "Not a scratch. The pearl divers of old would be proud."
         ]
       },
-      "reward": 450,
+      "reward": 420,
       "speed_limit_kmh": 50,
+      "start": {
+        "names": [
+          "Hyatt Centric Jumeirah Dubai"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ],
+        "resolved": {
+          "osm_id": "way/1208562102",
+          "name": "Hyatt Centric Jumeirah Dubai",
+          "category": "tourism=hotel",
+          "lat": 25.234584,
+          "lon": 55.260513,
+          "access": {
+            "lat": 25.234437,
+            "lon": 55.260389,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 20.5
+          }
+        }
+      },
       "target": {
         "names": [
           "Etihad Museum"
         ],
-        "categories": [
-          "tourism=museum"
+        "resolved": {
+          "osm_id": "node/5332056385",
+          "name": "Etihad Museum",
+          "category": "tourism=museum",
+          "lat": 25.241433,
+          "lon": 55.269331,
+          "access": {
+            "lat": 25.240552,
+            "lon": 55.269568,
+            "road": "2nd December Street",
+            "highway": "primary",
+            "snap_m": 100.3
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2071,
+        "free_flow_s": 128.0,
+        "signals": 4,
+        "roads": [
+          "2a Street",
+          "Jumeira Street",
+          "2nd December Street"
         ]
       }
     },
@@ -297,30 +697,69 @@
       "id": "jum_10",
       "type": "drive_to",
       "title": "Karak Break",
-      "description": "Drive to {target}.",
-      "npc": "Bilal",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Nurse Joy",
       "dialogue": {
         "intro": [
-          "Long day. I need a karak.",
-          "Let's stop at {target}."
+          "Twelve-hour night shift at {start} is finally over.",
+          "Take me to {target} - I need a coffee and something green before I sleep."
         ],
         "complete": [
-          "Ahh, perfect. This one is on me."
+          "Ahh. Best coffee in Jumeirah 1. Thank you!"
         ]
       },
-      "reward": 150,
+      "reward": 160,
+      "start": {
+        "names": [
+          "Belhoul European Hospital"
+        ],
+        "resolved": {
+          "osm_id": "way/297258185",
+          "name": "Belhoul European Hospital",
+          "category": "amenity=hospital",
+          "lat": 25.23695,
+          "lon": 55.275254,
+          "access": {
+            "lat": 25.236654,
+            "lon": 55.275042,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 39.1
+          }
+        }
+      },
       "target": {
         "names": [
           "Comptoir 102",
-          "Tim Hortons",
-          "Starbucks"
+          "Comptoir 102 - Healthy Cafe and Concept Store"
         ],
-        "categories": [
-          "amenity=restaurant",
-          "amenity=cafe",
-          "amenity=fast_food"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "node/11270770491",
+          "name": "Comptoir 102 - Healthy Cafe and Concept Store",
+          "category": "amenity=cafe",
+          "lat": 25.226081,
+          "lon": 55.258527,
+          "access": {
+            "lat": 25.226273,
+            "lon": 55.258668,
+            "road": "43a Street",
+            "highway": "residential",
+            "snap_m": 25.6
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2890,
+        "free_flow_s": 174.0,
+        "signals": 7,
+        "roads": [
+          "6a Street",
+          "2nd December Street",
+          "Jumeira Street",
+          "43a Street"
+        ]
       }
     }
   ]

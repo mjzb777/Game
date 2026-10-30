@@ -40,7 +40,7 @@ func _ready() -> void:
 		var ready_count := 0
 		for m in d.get("missions", []):
 			var ok := true
-			for role in ["pickup", "dropoff", "target"]:
+			for role in ["start", "pickup", "dropoff", "target"]:
 				if m.has(role) and not (m[role].get("resolved") is Dictionary):
 					ok = false
 			if ok:
