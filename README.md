@@ -87,6 +87,9 @@ godot --headless --path . --import                              # first time onl
 godot --headless --path . -s res://tests/check_scripts.gd      # every script compiles
 godot --headless --path . res://tests/test_runner.tscn         # gameplay checks
 python3 tests/test_tools.py                                    # OSM conversion, matching, routing
+godot --headless --path . res://tests/test_runner.tscn         # 75 gameplay checks
+godot --headless --path . -s res://tests/test_menu.gd          # clicks every district button
+python3 tests/test_tools.py                                    # OSM conversion + place matching
 ```
 
 `test_runner.tscn` loads every real district scene and data file. It checks that each has
