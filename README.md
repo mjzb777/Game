@@ -67,6 +67,7 @@ element it matched (id and coordinates), and any place that could not be verifie
 godot --headless --path . --import                              # first time only
 godot --headless --path . -s res://tests/check_scripts.gd      # every script compiles
 godot --headless --path . res://tests/test_runner.tscn         # 75 gameplay checks
+godot --headless --path . -s res://tests/test_menu.gd          # clicks every district button
 python3 tests/test_tools.py                                    # OSM conversion + place matching
 ```
 
