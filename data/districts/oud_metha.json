@@ -8,9 +8,19 @@
     "east": 55.3319
   },
   "spawn": {
-    "lat": 25.235,
-    "lon": 55.317,
-    "heading_deg": 0
+    "lat": 25.235003,
+    "lon": 55.317259,
+    "heading_deg": 179.3,
+    "road": "Oud Maitha Road",
+    "osm_id": "way/447312059",
+    "hint_lat": 25.235,
+    "hint_lon": 55.317
+  },
+  "building_defaults": {
+    "generic_m": 15.0,
+    "small_m": 7.0,
+    "large_m": 15.0,
+    "note": "Oud Metha is mixed 3-6 storey blocks, schools and hospitals"
   },
   "osm_file": "res://data/osm/oud_metha.json",
   "missions": [
@@ -18,27 +28,73 @@
       "id": "oud_01",
       "type": "drive_to",
       "title": "Pyramid Shopping",
-      "description": "Drive to {target}.",
-      "npc": "Joanna",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Nadia",
       "dialogue": {
         "intro": [
-          "I heard there are pyramids in Dubai!",
-          "Take me to {target}."
+          "I came on the Green Line to {start}, but it's too hot to walk.",
+          "Take me to {target}. I want to see the pyramids and the stained glass."
         ],
         "complete": [
-          "Egyptian style in Dubai. Amazing!"
+          "Look at this place! Egypt in the middle of Dubai."
         ]
       },
-      "reward": 220,
+      "reward": 200,
+      "start": {
+        "names": [
+          "Oud Metha"
+        ],
+        "categories": [
+          "railway=station"
+        ],
+        "resolved": {
+          "osm_id": "node/6584833633",
+          "name": "Oud Metha",
+          "category": "railway=station",
+          "lat": 25.24393,
+          "lon": 55.315894,
+          "access": {
+            "lat": 25.243947,
+            "lon": 55.315989,
+            "road": "Oud Maitha Road",
+            "highway": "primary",
+            "snap_m": 9.7
+          }
+        }
+      },
       "target": {
         "names": [
-          "Wafi Mall",
-          "Wafi City",
-          "Wafi"
+          "Wafi Mall"
         ],
         "categories": [
           "shop=mall",
-          "shop=department_store"
+          "building=retail"
+        ],
+        "resolved": {
+          "osm_id": "relation/5749027",
+          "name": "Wafi Mall",
+          "category": "shop=mall",
+          "lat": 25.228754,
+          "lon": 55.319391,
+          "access": {
+            "lat": 25.228852,
+            "lon": 55.319413,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 11.1
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2977,
+        "free_flow_s": 212.6,
+        "signals": 3,
+        "roads": [
+          "Oud Maitha Road",
+          "19th Street",
+          "Al Madina Al Tebbia Street"
         ]
       }
     },
@@ -46,27 +102,41 @@
       "id": "oud_02",
       "type": "delivery",
       "title": "Hotel Luggage",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Bellboy Ravi",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Bellboy Kiran",
       "dialogue": {
         "intro": [
-          "A guest left {item} at {pickup}.",
-          "They're staying at {dropoff}. Can you bring it?"
+          "A guest moved hotels and left {item} at {pickup}.",
+          "Please take it to {dropoff} - the guest is in the presidential suite."
         ],
         "complete": [
-          "The guest gave you a big thank-you tip!"
+          "Delivered with style. Here's your tip."
         ]
       },
-      "reward": 380,
-      "item": "a suitcase",
+      "reward": 300,
+      "item": "two Louis Vuitton suitcases",
       "pickup": {
         "names": [
-          "Lamcy Plaza"
+          "Mövenpick Hotel & Apartments Bur Dubai"
         ],
         "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+          "tourism=hotel",
+          "building=hotel"
+        ],
+        "resolved": {
+          "osm_id": "way/244376102",
+          "name": "Mövenpick Hotel & Apartments Bur Dubai",
+          "category": "tourism=hotel",
+          "lat": 25.233899,
+          "lon": 55.311502,
+          "access": {
+            "lat": 25.233945,
+            "lon": 55.311187,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 32.1
+          }
+        }
       },
       "dropoff": {
         "names": [
@@ -75,255 +145,617 @@
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "node/3896699589",
+          "name": "Raffles Dubai",
+          "category": "tourism=hotel",
+          "lat": 25.22793,
+          "lon": 55.320481,
+          "access": {
+            "lat": 25.227872,
+            "lon": 55.320941,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 46.8
+          }
+        }
+      },
+      "time_limit": 250,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2128,
+        "free_flow_s": 138.6,
+        "signals": 3,
+        "roads": [
+          "18 Street",
+          "19th Street",
+          "Al Raazi Street"
+        ],
+        "time_limit_rule": "ceil5(138.6 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "oud_03",
       "type": "timed",
       "title": "Last Metro",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Arjun",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Imran",
       "dialogue": {
         "intro": [
-          "The last train leaves in a few minutes!",
-          "Get me to {target} in {time} seconds."
+          "Bowling ran late at {start} and the last Green Line train is soon.",
+          "Get me to {target} station in {time} seconds or it's a 60-dirham taxi to Al Qusais!"
         ],
         "complete": [
-          "I can hear the train coming. Thanks!"
+          "Made it! I owe you shawarma."
         ]
       },
       "reward": 330,
-      "time_limit": 80,
+      "start": {
+        "names": [
+          "Al-Nasr Leisureland"
+        ],
+        "resolved": {
+          "osm_id": "way/1262141741",
+          "name": "Al-Nasr Leisureland",
+          "category": "leisure=sports_centre",
+          "lat": 25.23763,
+          "lon": 55.311945,
+          "access": {
+            "lat": 25.23763,
+            "lon": 55.311935,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 1.0
+          }
+        }
+      },
       "target": {
         "names": [
-          "Oud Metha"
+          "Dubai Healthcare City"
         ],
         "categories": [
-          "railway=station",
-          "public_transport=station"
-        ]
+          "railway=station"
+        ],
+        "resolved": {
+          "osm_id": "node/6584833635",
+          "name": "Dubai Healthcare City",
+          "category": "railway=station",
+          "lat": 25.230953,
+          "lon": 55.322619,
+          "access": {
+            "lat": 25.230887,
+            "lon": 55.322607,
+            "road": "Al Madina Al Tebbia Street",
+            "highway": "tertiary",
+            "snap_m": 7.4
+          }
+        }
+      },
+      "time_limit": 210,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 1971,
+        "free_flow_s": 143.7,
+        "signals": 2,
+        "roads": [
+          "12b Street",
+          "15 Street",
+          "16 Street",
+          "19th Street",
+          "Al Raazi Street",
+          "Al Madina Al Tebbia Street"
+        ],
+        "time_limit_rule": "ceil5(143.7 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "oud_04",
       "type": "speed_limit",
       "title": "Patient Transfer",
-      "description": "Drive to {target} without going over {limit} km/h.",
-      "npc": "Nurse Grace",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
+      "npc": "Dr. Fatima",
       "dialogue": {
         "intro": [
-          "This patient was just discharged, but still sore.",
-          "Drive them to {target}, under {limit} km/h please."
+          "The patient is stable but must go from {start} to {target}.",
+          "No sudden moves. Keep it under {limit} km/h."
         ],
         "complete": [
-          "Gentle and safe. Thank you."
+          "Transfer complete. The trauma team has him now. Good driving."
         ]
       },
-      "reward": 300,
+      "reward": 380,
       "speed_limit_kmh": 50,
+      "start": {
+        "names": [
+          "American Hospital",
+          "American Hospital Dubai"
+        ],
+        "resolved": {
+          "osm_id": "way/244376544",
+          "name": "American Hospital",
+          "category": "amenity=hospital",
+          "lat": 25.235547,
+          "lon": 55.313081,
+          "access": {
+            "lat": 25.235554,
+            "lon": 55.312856,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 22.7
+          }
+        }
+      },
       "target": {
         "names": [
           "Rashid Hospital"
         ],
-        "categories": [
-          "amenity=hospital",
-          "building=hospital"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "node/1532270489",
+          "name": "Rashid Hospital",
+          "category": "amenity=hospital",
+          "lat": 25.244184,
+          "lon": 55.318893,
+          "access": {
+            "lat": 25.243783,
+            "lon": 55.318445,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 63.2
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2041,
+        "free_flow_s": 157.0,
+        "signals": 2,
+        "roads": [
+          "15 Street",
+          "16 Street",
+          "19th Street",
+          "Oud Maitha Road",
+          "8 Street"
+        ]
       }
     },
     {
       "id": "oud_05",
       "type": "delivery",
       "title": "Medical Supplies",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
-      "npc": "Dr. Nadia",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
+      "npc": "Nurse Mei",
       "dialogue": {
         "intro": [
-          "A courier dropped {item} at {pickup}.",
-          "We need them at {dropoff} today."
+          "The paediatric ward at {dropoff} is short on {item}.",
+          "{pickup} has spares. Please run them over - quick!"
         ],
         "complete": [
-          "The clinic can keep running. Thank you!"
+          "The doctors can start the next round now. Thank you!"
         ]
       },
-      "reward": 400,
-      "item": "a cooler of medical supplies",
+      "reward": 350,
+      "item": "a cool box of vaccines",
       "pickup": {
         "names": [
-          "Dubai Healthcare City"
+          "Mediclinic City Hospital"
         ],
-        "categories": [
-          "railway=station",
-          "public_transport=station"
-        ]
+        "resolved": {
+          "osm_id": "relation/17328926",
+          "name": "Mediclinic City Hospital",
+          "category": "building=hospital",
+          "lat": 25.230913,
+          "lon": 55.322761,
+          "access": {
+            "lat": 25.230865,
+            "lon": 55.322752,
+            "road": "Al Madina Al Tebbia Street",
+            "highway": "tertiary",
+            "snap_m": 5.4
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "American Hospital Dubai",
-          "American Hospital"
+          "American Hospital",
+          "American Hospital Dubai"
         ],
-        "categories": [
-          "amenity=hospital",
-          "building=hospital"
-        ]
+        "resolved": {
+          "osm_id": "way/244376544",
+          "name": "American Hospital",
+          "category": "amenity=hospital",
+          "lat": 25.235547,
+          "lon": 55.313081,
+          "access": {
+            "lat": 25.235554,
+            "lon": 55.312856,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 22.7
+          }
+        }
+      },
+      "time_limit": 295,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 2421,
+        "free_flow_s": 168.1,
+        "signals": 3,
+        "roads": [
+          "Al Madina Al Tebbia Street",
+          "19th Street"
+        ],
+        "time_limit_rule": "ceil5(168.1 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "oud_06",
       "type": "drive_to",
       "title": "Sunday Mass",
-      "description": "Drive to {target}.",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
       "npc": "Maria",
       "dialogue": {
         "intro": [
-          "Mass starts soon.",
-          "Please take me to {target}."
+          "Mass starts at {target} in a bit.",
+          "I'm at {start}. Can you drive me? The parking there is always full on Sundays."
         ],
         "complete": [
-          "Just in time. God bless you."
+          "Just in time for the first hymn. God bless you."
         ]
       },
       "reward": 180,
+      "start": {
+        "names": [
+          "Karama Park"
+        ],
+        "resolved": {
+          "osm_id": "way/113042743",
+          "name": "Karama Park",
+          "category": "leisure=park",
+          "lat": 25.243046,
+          "lon": 55.305269,
+          "access": {
+            "lat": 25.243192,
+            "lon": 55.304704,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 59.2
+          }
+        }
+      },
       "target": {
         "names": [
-          "St. Mary's Catholic Church",
-          "St Mary's Catholic Church",
-          "Saint Mary's Catholic Church"
+          "St Marys Catholic Church",
+          "St. Mary's Catholic Church"
         ],
-        "categories": [
-          "amenity=place_of_worship",
-          "building=church"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "node/1532272198",
+          "name": "St Marys Catholic Church",
+          "category": "amenity=place_of_worship",
+          "lat": 25.240233,
+          "lon": 55.317606,
+          "access": {
+            "lat": 25.240005,
+            "lon": 55.3178,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 31.9
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4914,
+        "free_flow_s": 338.3,
+        "signals": 1,
+        "roads": [
+          "29a Street",
+          "20b Street",
+          "Zaa'beel Street",
+          "Za'abeel Street",
+          "Oud Maitha Road"
+        ]
       }
     },
     {
       "id": "oud_07",
       "type": "timed",
       "title": "Bowling Night",
-      "description": "Reach {target} within {time} seconds.",
-      "npc": "Faisal",
+      "description": "Meet {npc} at {start}, then reach {target} within {time} s.",
+      "npc": "Arjun",
       "dialogue": {
         "intro": [
-          "Our lane at {target} is booked.",
-          "They'll give it away in {time} seconds!"
+          "Our team plays the league final at {target} and I'm the anchor!",
+          "Pick me up at {start}. {time} seconds or we forfeit."
         ],
         "complete": [
-          "Strike! Thanks for the lift."
+          "We won! Strike in the tenth frame."
         ]
       },
-      "reward": 350,
-      "time_limit": 90,
-      "target": {
+      "reward": 330,
+      "start": {
         "names": [
-          "Al Nasr Leisureland",
-          "Al Nasr Leisure Land"
+          "Wafi Mall"
         ],
         "categories": [
-          "leisure=sports_centre",
-          "tourism=attraction",
-          "amenity=ice_rink",
-          "leisure=ice_rink"
+          "shop=mall",
+          "building=retail"
         ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "relation/5749027",
+          "name": "Wafi Mall",
+          "category": "shop=mall",
+          "lat": 25.228754,
+          "lon": 55.319391,
+          "access": {
+            "lat": 25.228852,
+            "lon": 55.319413,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 11.1
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "Al-Nasr Leisureland"
+        ],
+        "resolved": {
+          "osm_id": "way/1262141741",
+          "name": "Al-Nasr Leisureland",
+          "category": "leisure=sports_centre",
+          "lat": 25.23763,
+          "lon": 55.311945,
+          "access": {
+            "lat": 25.23763,
+            "lon": 55.311935,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 1.0
+          }
+        }
+      },
+      "time_limit": 255,
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 2553,
+        "free_flow_s": 174.9,
+        "signals": 2,
+        "roads": [
+          "Al Raazi Street",
+          "Sheikh Rashid Road",
+          "10 Street",
+          "15 Street",
+          "12b Street"
+        ],
+        "time_limit_rule": "ceil5(174.9 s x 1.35 + 15 s)"
       }
     },
     {
       "id": "oud_08",
       "type": "delivery",
       "title": "Birthday Cake",
-      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "description": "Collect {item} at {pickup} and deliver it to {dropoff} within {time} s.",
       "npc": "Leena",
       "dialogue": {
         "intro": [
-          "The bakery at {pickup} has {item} ready.",
-          "The party is at {dropoff}."
+          "My boss's birthday party is at {dropoff} and I forgot the cake at {pickup}!",
+          "Please bring {item} - and don't tilt it!"
         ],
         "complete": [
-          "Happy birthday to everyone! You're invited."
+          "Perfect! She'll never know it was late."
         ]
       },
-      "reward": 320,
-      "item": "a birthday cake",
+      "reward": 340,
+      "item": "a chocolate cake",
       "pickup": {
         "names": [
-          "Wafi Mall",
-          "Wafi City",
-          "Wafi"
+          "Wafi gourment",
+          "Wafi Gourmet"
         ],
-        "categories": [
-          "shop=mall",
-          "shop=department_store"
-        ]
+        "resolved": {
+          "osm_id": "node/4340021892",
+          "name": "Wafi gourment",
+          "category": "amenity=restaurant",
+          "lat": 25.230367,
+          "lon": 55.318988,
+          "access": {
+            "lat": 25.230384,
+            "lon": 55.319032,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 4.8
+          }
+        }
       },
       "dropoff": {
         "names": [
-          "Grand Hyatt Dubai",
-          "Grand Hyatt"
+          "Grand Hyatt Dubai"
         ],
         "categories": [
           "tourism=hotel",
           "building=hotel"
-        ]
+        ],
+        "resolved": {
+          "osm_id": "way/386266181",
+          "name": "Grand Hyatt Dubai",
+          "category": "tourism=hotel",
+          "lat": 25.228198,
+          "lon": 55.328025,
+          "access": {
+            "lat": 25.227777,
+            "lon": 55.327777,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 52.8
+          }
+        }
+      },
+      "time_limit": 235,
+      "route": {
+        "from": "pickup",
+        "to": "dropoff",
+        "distance_m": 1379,
+        "free_flow_s": 128.8,
+        "signals": 2,
+        "roads": [
+          "Al Madina Al Tebbia Street",
+          "Ibn Seena Street"
+        ],
+        "time_limit_rule": "ceil5(128.8 s x 1.60 + 25 s)"
       }
     },
     {
       "id": "oud_09",
       "type": "speed_limit",
       "title": "School Run",
-      "description": "Drive to {target} without going over {limit} km/h.",
+      "description": "Meet {npc} at {start}, then drive to {target} without going over {limit} km/h.",
       "npc": "Mr. Thomas",
       "dialogue": {
         "intro": [
-          "Drop these exam papers at {target}.",
-          "School zone - stay under {limit} km/h."
+          "The kids are waiting at {start} after their dentist appointment.",
+          "Take them back to {target}. Stay under {limit} km/h - it's a school zone."
         ],
         "complete": [
-          "Papers delivered, students safe. Thank you."
+          "All safe. The teachers say thank you."
         ]
       },
       "reward": 260,
       "speed_limit_kmh": 40,
-      "target": {
+      "start": {
         "names": [
-          "Indian High School",
-          "The Indian High School"
+          "Lulu Shopping"
         ],
         "categories": [
-          "amenity=school",
-          "building=school"
+          "shop=mall",
+          "building=retail"
         ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "way/295115225",
+          "name": "Lulu Shopping",
+          "category": "shop=mall",
+          "lat": 25.244329,
+          "lon": 55.304163,
+          "access": {
+            "lat": 25.244362,
+            "lon": 55.304017,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 15.2
+          }
+        }
+      },
+      "target": {
+        "names": [
+          "The Indian High School"
+        ],
+        "resolved": {
+          "osm_id": "way/226855009",
+          "name": "The Indian High School",
+          "category": "amenity=school",
+          "lat": 25.240557,
+          "lon": 55.315258,
+          "access": {
+            "lat": 25.240928,
+            "lon": 55.315163,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 42.1
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 4251,
+        "free_flow_s": 337.6,
+        "signals": 0,
+        "roads": [
+          "29a Street",
+          "20b Street",
+          "Zaa'beel Street",
+          "Za'abeel Street",
+          "Zaa'beel Street",
+          "Umm Hurair Road",
+          "9a Street",
+          "10 Street",
+          "9 Street"
+        ]
       }
     },
     {
       "id": "oud_10",
       "type": "drive_to",
       "title": "Lunch Break",
-      "description": "Drive to {target}.",
-      "npc": "Sameer",
+      "description": "Meet {npc} at {start}, then drive to {target}.",
+      "npc": "Dr. Omar",
       "dialogue": {
         "intro": [
-          "I'm craving a proper lunch.",
-          "Let's go to {target}."
+          "A double shift at {start} and I've only had coffee.",
+          "Take me to {target} for proper Arabic food. Khalas, I'm starving."
         ],
         "complete": [
-          "Delicious. Good choice of driver!"
+          "Mmm. Mixed grill and fattoush. You're a hero."
         ]
       },
-      "reward": 150,
+      "reward": 170,
+      "start": {
+        "names": [
+          "Rashid Hospital"
+        ],
+        "resolved": {
+          "osm_id": "node/1532270489",
+          "name": "Rashid Hospital",
+          "category": "amenity=hospital",
+          "lat": 25.244184,
+          "lon": 55.318893,
+          "access": {
+            "lat": 25.243783,
+            "lon": 55.318445,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 63.2
+          }
+        }
+      },
       "target": {
         "names": [
-          "Wafi Gourmet"
+          "Khan Murjan Restaurant",
+          "Khan Murjan"
         ],
-        "categories": [
-          "amenity=restaurant",
-          "amenity=cafe",
-          "amenity=fast_food"
-        ],
-        "allow_fallback": true
+        "resolved": {
+          "osm_id": "node/12554512801",
+          "name": "Khan Murjan Restaurant",
+          "category": "amenity=restaurant",
+          "lat": 25.229304,
+          "lon": 55.319326,
+          "access": {
+            "lat": 25.229456,
+            "lon": 55.319203,
+            "road": "(unnamed service)",
+            "highway": "service",
+            "snap_m": 20.9
+          }
+        }
+      },
+      "route": {
+        "from": "start",
+        "to": "target",
+        "distance_m": 3122,
+        "free_flow_s": 218.9,
+        "signals": 5,
+        "roads": [
+          "8 Street",
+          "Oud Maitha Road",
+          "19th Street",
+          "Al Raazi Street"
+        ]
       }
     }
   ]

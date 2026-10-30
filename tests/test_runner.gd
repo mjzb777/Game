@@ -52,6 +52,7 @@ func _run() -> void:
 	await _test_driving()
 	await _test_missions()
 	await _test_fuel()
+	await _test_tickets()
 	_test_save()
 
 
@@ -76,10 +77,19 @@ func _test_district_files() -> void:
 				ok = false
 			if mi.get("type") == "delivery" and not (mi.has("pickup") and mi.has("dropoff") and mi.has("item")):
 				ok = false
-			if mi.get("type") != "delivery" and not mi.has("target"):
+			if mi.get("type") != "delivery" and not (mi.has("target") and mi.has("start")):
 				ok = false
-			if mi.get("type") == "timed" and not mi.has("time_limit"):
+			if (mi.get("type") == "timed" or mi.get("type") == "delivery") and not mi.has("time_limit"):
 				ok = false
+			if not mi.has("route") or float(mi["route"].get("distance_m", 0)) < 300.0:
+				ok = false
+				printerr("    %s has no computed route" % mi.get("id", "?"))
+			for role in ["start", "pickup", "dropoff", "target"]:
+				if mi.has(role):
+					var res = mi[role].get("resolved")
+					if not (res is Dictionary and res.has("osm_id") and res.has("access")):
+						ok = false
+						printerr("    %s %s not resolved to a real OSM place on a road" % [mi.get("id", "?"), role])
 			if mi.get("type") == "speed_limit" and not mi.has("speed_limit_kmh"):
 				ok = false
 			if mi.get("dialogue", {}).get("intro", []).is_empty() or mi.get("dialogue", {}).get("complete", []).is_empty():
@@ -97,12 +107,33 @@ func _test_district_scenes() -> void:
 		check(inst.car != null and inst.hud != null and inst.missions != null, "%s scene builds car, HUD and missions" % d["id"])
 		if not DistrictRegistry.has_osm_data(d):
 			check(inst.load_error.contains("fetch_osm"), "%s without OSM data shows how to fetch it" % d["id"])
+			inst.queue_free()
+			await frames(2)
+			continue
+		check(inst.load_error.is_empty(), "%s loads its OSM map without errors" % d["id"])
+		check(inst.roads.segment_count() > 1000, "%s has a real road network (%d segments)" % [d["id"], inst.roads.segment_count()])
+		check(inst.has_node("Buildings") and inst.has_node("BuildingCollision"), "%s has buildings" % d["id"])
+		check(inst.fuel_stations.size() > 0, "%s has real petrol stations (%d)" % [d["id"], inst.fuel_stations.size()])
+		var cp: Vector3 = inst.car.global_position
+		var on: Dictionary = inst.roads.nearest(Vector2(cp.x, cp.z), 3.0, true)
+		check(not on.is_empty(), "%s: car spawns on a drivable road" % d["id"])
+		if not on.is_empty():
+			var f: Vector3 = inst.car.forward()
+			var along: float = absf(Vector2(f.x, f.z).dot(on["dir"]))
+			check(along > 0.98, "%s: car faces along %s (|cos| %.2f)" % [d["id"], on["name"], along])
+			if on["oneway"]:
+				check(Vector2(f.x, f.z).dot(on["dir"]) > 0.0, "%s: car faces the legal way on a one-way road" % d["id"])
+		var avail := 0
+		for mi in inst.missions.missions:
+			if mi["available"]:
+				avail += 1
+		check(avail == 10, "%s: all 10 missions available (%d)" % [d["id"], avail])
 		inst.queue_free()
 		await frames(2)
 
 
 func _test_world() -> void:
-	check(level.roads.segment_count() == 14, "14 road segments built (got %d)" % level.roads.segment_count())
+	check(level.roads.segment_count() == 15, "15 road segments built (got %d)" % level.roads.segment_count())
 	check(level.has_node("Buildings") and level.has_node("BuildingCollision"), "building mesh and collision exist")
 	check(level.has_node("MajorRoads") and level.has_node("MinorRoads"), "road meshes exist")
 	var p: Vector3 = level.car.global_position
@@ -110,10 +141,17 @@ func _test_world() -> void:
 	check(not hit.is_empty() and hit["distance"] < 0.5, "car spawns on a road")
 	var info: Dictionary = level.roads.nearest(Vector2(0, 300), 10.0)
 	check(info.get("maxspeed_kmh") == 40 and str(info.get("name")).begins_with("Test Street"), "road lookup returns name and speed limit")
+	var any_road: Dictionary = level.roads.nearest(Vector2(6, 0), 10.0)
+	var public_road: Dictionary = level.roads.nearest(Vector2(6, 0), 10.0, true)
+	check(any_road.get("name") == "Private Lane" and public_road.get("name") != "Private Lane", "spawn/reset lookups skip private, unconnected roads")
+	var north: Dictionary = level.roads.road_at(Vector2(0, 0), Vector2(0, -1))
+	var east: Dictionary = level.roads.road_at(Vector2(0, 0), Vector2(1, 0))
+	check(str(north.get("name")).begins_with("Test Street") and str(east.get("name")).begins_with("Test Avenue"), "at a junction the road the car is heading along wins")
 
 
 func _test_driving() -> void:
 	var car: Car = level.car
+	level.enforcer.enabled = false  # tickets are tested on their own in _test_tickets
 	car.place(Vector3(0, 0, 500), Vector2(0, -1))  # on Test Street, facing north
 	await frames(10)
 	var start := car.global_position
@@ -143,14 +181,21 @@ func _test_driving() -> void:
 	check(car.global_position.z < -240.0, "buildings drawn over a road do not block it (z=%.1f)" % car.global_position.z)
 	car.input_override = {"handbrake": true}
 	await frames(30)
+	var slow := car.fuel.rate_per_km(50.0, 0.2)
+	check(car.fuel.rate_per_km(120.0, 0.2) > slow * 1.5 and car.fuel.rate_per_km(50.0, 1.0) > slow * 1.5, "fuel burns faster at speed and under throttle")
+	level.enforcer.enabled = true
 
 
+## Starts a mission, drives (teleports) to the NPC, then clicks through the intro.
 func _start_and_accept(m: MissionEngine, id: String) -> bool:
 	events.clear()
 	if not m.start_mission(id):
 		return false
 	await frames(1)
-	# Click through the intro dialogue like a player would.
+	if m.state == MissionEngine.State.TO_START:
+		if m.time_left >= 0.0:
+			return false  # the clock must not run before meeting the NPC
+		await _teleport(m.objective_position())
 	for i in 5:
 		if m.state != MissionEngine.State.INTRO:
 			break
@@ -180,8 +225,11 @@ func _test_missions() -> void:
 
 	# drive_to
 	var money0 := Game.money
-	check(await _start_and_accept(m, "t_drive"), "drive_to mission starts after intro dialogue")
-	check(events.size() > 0 and events[0][0] == "dialogue" and events[0][2][1] == "Go to North Point", "intro dialogue has the place name")
+	check(m.start_mission("t_drive") and m.state == MissionEngine.State.TO_START, "a mission begins by meeting the NPC")
+	check(m.objective_text().contains("Meeting Point") and m.time_left < 0.0, "meet objective names the real start place, no timer yet")
+	m.cancel_mission()
+	check(await _start_and_accept(m, "t_drive"), "drive_to mission starts after meeting the NPC and the intro dialogue")
+	check(events.any(func(e): return e[0] == "dialogue" and e[2].size() > 1 and e[2][1] == "Go to North Point"), "intro dialogue has the place name")
 	check(m.objective_position() != null, "objective has a world position")
 	check(m.has_node("ObjectiveMarker"), "objective marker is placed in the world")
 	await _teleport(m.objective_position())
@@ -192,10 +240,10 @@ func _test_missions() -> void:
 	check(m.state == MissionEngine.State.IDLE, "completion dialogue closes")
 
 	# delivery
+	check(m.start_mission("t_deliver") and m.stage == "pickup", "delivery: meet the NPC at the pickup")
+	m.cancel_mission()
 	check(await _start_and_accept(m, "t_deliver"), "delivery starts")
-	check(m.stage == "pickup", "delivery begins at pickup")
-	await _teleport(m.objective_position())
-	check(m.stage == "dropoff", "pickup reached, now dropoff")
+	check(m.stage == "dropoff" and m.time_left > 50.0, "after collecting the item the timed leg to the dropoff begins")
 	await _teleport(m.objective_position())
 	check(events.any(func(e): return e[0] == "completed" and e[1] == "t_deliver"), "delivery completes at dropoff")
 	_finish_outro(m)
@@ -210,9 +258,11 @@ func _test_missions() -> void:
 
 	# speed_limit: speeding fails, careful driving succeeds
 	check(await _start_and_accept(m, "t_speed"), "speed-limit mission starts")
+	level.enforcer.enabled = false
 	car.place(Vector3(0, 0, 500), Vector2(0, -1))
 	car.input_override = {"throttle": 1.0}
 	await frames(240)
+	level.enforcer.enabled = true
 	check(events.any(func(e): return e[0] == "failed" and e[1] == "t_speed"), "speeding fails the mission")
 	car.input_override = {"handbrake": true}
 	await frames(60)
@@ -244,12 +294,58 @@ func _test_fuel() -> void:
 	level.hud._try_refuel()
 	check(car.fuel.liters > 10.0, "refuel adds fuel (%.1f L)" % car.fuel.liters)
 	check(Game.money < money0, "refuel costs money (AED %d -> %d)" % [money0, Game.money])
+	await _teleport(Vector3(-400, 0, 400))
+	check(level.hud.nearest_fuel_station().is_empty(), "no refuelling away from a real petrol station")
+	var before := car.fuel.liters
+	level.hud._try_refuel()
+	check(car.fuel.liters == before, "pressing F elsewhere adds no fuel")
 	car.fuel.liters = 0.0
 	car.input_override = {"throttle": 1.0}
 	await frames(60)
 	check(car.speed_kmh() < 1.0, "car cannot accelerate without fuel")
+	car.input_override = {"handbrake": true}
+	var money1 := Game.money
 	level.hud._reset_car()
-	check(car.fuel.liters >= 5.0, "reset gives emergency fuel")
+	await frames(3)
+	check(car.fuel.liters == 0.0, "no free fuel on reset")
+	check(not level.hud.nearest_fuel_station().is_empty(), "empty tank: towed to the nearest real petrol station")
+	check(Game.money == money1 - Hud.TOW_FEE, "tow costs AED %d" % Hud.TOW_FEE)
+	Game.add_money(500)
+	level.hud._try_refuel()
+	check(car.fuel.liters > 30.0, "refuel at the station after the tow")
+	car.input_override = {}
+
+
+func _test_tickets() -> void:
+	var car: Car = level.car
+	var enf: SpeedEnforcer = level.enforcer
+	check(SpeedEnforcer.fine_for(15.0) == 300 and SpeedEnforcer.fine_for(45.0) == 1000 and SpeedEnforcer.fine_for(90.0) == 3000, "fines follow the UAE schedule")
+	car.place(Vector3(0, 0, 550), Vector2(0, -1))  # Test Street, limit 40
+	await frames(10)
+	check(enf.limit_kmh() == 40, "enforcer reads the OSM limit of the current road (%d)" % enf.limit_kmh())
+	var money0 := Game.money
+	var tickets0 := Game.tickets.size()
+	car.input_override = {"throttle": 1.0}
+	for i in 360:
+		await get_tree().physics_frame
+		if Game.tickets.size() > tickets0:
+			break
+	check(Game.tickets.size() == tickets0 + 1, "speeding on a 40 road earns a ticket")
+	if Game.tickets.size() > tickets0:
+		var t: Dictionary = Game.tickets[-1]
+		check(t["limit"] == 40 and t["speed"] > 45 and Game.money == money0 - int(t["fine"]), "ticket records road limit, speed and fine (%s)" % str(t))
+	car.input_override = {"handbrake": true}
+	await frames(120)
+	# Within the tolerance: no ticket.
+	var n := Game.tickets.size()
+	car.place(Vector3(0, 0, 550), Vector2(0, -1))
+	car.speed = 43.0 / 3.6
+	for i in 90:
+		car.speed = 43.0 / 3.6
+		await get_tree().physics_frame
+	check(Game.tickets.size() == n, "no ticket within the %d km/h tolerance" % int(SpeedEnforcer.TOLERANCE_KMH))
+	car.input_override = {"handbrake": true}
+	await frames(60)
 	car.input_override = {}
 
 
@@ -259,3 +355,4 @@ func _test_save() -> void:
 	Game.load_save()
 	check(Game.money == money and money > 0, "money is saved and loaded (AED %d)" % Game.money)
 	check(Game.times_completed("t_drive") == 2, "completed missions are saved")
+	check(Game.tickets.size() >= 1, "speeding tickets are saved")

@@ -2,13 +2,16 @@ class_name MissionEngine
 extends Node
 ## Runs missions defined in a district's data file.
 ##
-## Mission types:
-##   drive_to     - reach "target"
-##   delivery     - reach "pickup", then "dropoff" (carrying "item")
-##   timed        - reach "target" before "time_limit" seconds run out
-##   speed_limit  - reach "target" without exceeding "speed_limit_kmh"
-## Any mission may also set "time_limit". Places are only usable once
-## tools/resolve_missions.py has matched them to real OSM data ("resolved").
+## Every mission starts by meeting the NPC at a real place (TO_START, no timer):
+## "start" for most missions, the "pickup" place for deliveries. Then the intro
+## dialogue plays and the timed/rated leg begins:
+##   drive_to     - start -> "target"
+##   delivery     - pickup -> "dropoff" (carrying "item")
+##   timed        - start -> "target" before "time_limit" seconds run out
+##   speed_limit  - start -> "target" without exceeding "speed_limit_kmh"
+## time_limit comes from tools/resolve_missions.py (route length and OSM speed
+## limits). Places are only usable once that tool has matched them to real OSM data
+## ("resolved"); markers go on the road access point it computed.
 
 signal dialogue_requested(npc: String, lines: Array)
 signal mission_started(mission: Dictionary)
@@ -16,7 +19,7 @@ signal objective_changed(text: String)
 signal mission_completed(mission: Dictionary, reward: int)
 signal mission_failed(mission: Dictionary, reason: String)
 
-enum State { IDLE, INTRO, ACTIVE, OUTRO }
+enum State { IDLE, TO_START, INTRO, ACTIVE, OUTRO }
 
 const REACH_RADIUS := 15.0
 const SNAP_TO_ROAD_DIST := 300.0
@@ -27,7 +30,7 @@ const REPLAY_REWARD_FACTOR := 0.25
 var missions: Array = []  # prepared mission dictionaries
 var state := State.IDLE
 var current: Dictionary = {}
-var stage := ""  # "pickup", "dropoff" or "target"
+var stage := ""  # "start", "pickup", "dropoff" or "target"
 var time_left := -1.0
 var speeding_time := 0.0
 
@@ -52,7 +55,7 @@ func _prepare(src: Dictionary) -> Dictionary:
 	m["place_names"] = {}
 	m["available"] = true
 	m["unavailable_reason"] = ""
-	for role in ["pickup", "dropoff", "target"]:
+	for role in ["start", "pickup", "dropoff", "target"]:
 		if not m.has(role):
 			continue
 		var res = m[role].get("resolved")
@@ -60,8 +63,14 @@ func _prepare(src: Dictionary) -> Dictionary:
 			m["available"] = false
 			m["unavailable_reason"] = "place not verified in OSM data"
 			continue
-		m["positions"][role] = _snap_to_road(_geo.to_local(res["lat"], res["lon"]))
+		var access = res.get("access")
+		if access is Dictionary:
+			m["positions"][role] = _geo.to_local(access["lat"], access["lon"])
+		else:
+			m["positions"][role] = _snap_to_road(_geo.to_local(res["lat"], res["lon"]))
 		m["place_names"][role] = str(res.get("name", ""))
+	# Where the NPC waits: the pickup for deliveries, else "start" (if the mission has one).
+	m["start_role"] = "pickup" if str(m.get("type", "")) == "delivery" else ("start" if m["positions"].has("start") else "")
 	var t := str(m.get("type", ""))
 	var needed := ["pickup", "dropoff"] if t == "delivery" else ["target"]
 	for role in needed:
@@ -78,8 +87,9 @@ func _prepare(src: Dictionary) -> Dictionary:
 
 
 ## Places can be inside a building footprint, so the marker goes on the nearest road.
+## (Only for data without a precomputed access point.)
 func _snap_to_road(p: Vector3) -> Vector3:
-	var hit := _roads.nearest(Vector2(p.x, p.z), SNAP_TO_ROAD_DIST)
+	var hit := _roads.nearest(Vector2(p.x, p.z), SNAP_TO_ROAD_DIST, true)
 	if hit.is_empty():
 		return p
 	var q: Vector2 = hit["point"]
@@ -89,6 +99,9 @@ func _snap_to_road(p: Vector3) -> Vector3:
 func format_text(m: Dictionary, text: String) -> String:
 	var names: Dictionary = m.get("place_names", {})
 	return text.format({
+		"start": names.get("start", "?"),
+		"npc": str(m.get("npc", "")),
+		"km": "%.1f" % (float(m.get("route", {}).get("distance_m", 0)) / 1000.0),
 		"target": names.get("target", "?"),
 		"pickup": names.get("pickup", "?"),
 		"dropoff": names.get("dropoff", "?"),
@@ -123,9 +136,26 @@ func start_mission(mission_id: String) -> bool:
 	if m.is_empty() or not m["available"]:
 		return false
 	current = m
-	state = State.INTRO
-	dialogue_requested.emit(str(m.get("npc", "")), format_lines(m, m.get("dialogue", {}).get("intro", [])))
+	var start_role := str(m.get("start_role", ""))
+	if start_role.is_empty():
+		_play_intro()
+		return true
+	# Drive to the NPC first; the clock only starts once the intro dialogue is over.
+	state = State.TO_START
+	stage = start_role
+	time_left = -1.0
+	speeding_time = 0.0
+	_show_marker()
+	mission_started.emit(current)
+	objective_changed.emit(objective_text())
 	return true
+
+
+func _play_intro() -> void:
+	state = State.INTRO
+	_hide_marker()
+	objective_changed.emit("")
+	dialogue_requested.emit(str(current.get("npc", "")), format_lines(current, current.get("dialogue", {}).get("intro", [])))
 
 
 ## Called by the UI when the player closes a dialogue.
@@ -138,8 +168,12 @@ func dialogue_finished() -> void:
 
 
 func _begin() -> void:
+	var was_met := not str(current.get("start_role", "")).is_empty()
 	state = State.ACTIVE
-	stage = "pickup" if current.get("type") == "delivery" else "target"
+	if current.get("type") == "delivery":
+		stage = "dropoff" if was_met else "pickup"
+	else:
+		stage = "target"
 	time_left = float(current.get("time_limit", -1.0))
 	if time_left <= 0.0:
 		time_left = -1.0
@@ -150,14 +184,18 @@ func _begin() -> void:
 
 
 func cancel_mission() -> void:
-	if state == State.ACTIVE or state == State.INTRO:
+	if state == State.ACTIVE or state == State.INTRO or state == State.TO_START:
 		_fail("Mission cancelled")
 
 
 func objective_text() -> String:
+	var names: Dictionary = current.get("place_names", {})
+	if state == State.TO_START:
+		if stage == "pickup":
+			return "Collect %s from %s at %s" % [current.get("item", "the package"), current.get("npc", "?"), names.get("pickup", "?")]
+		return "Meet %s at %s" % [current.get("npc", "?"), names.get("start", "?")]
 	if state != State.ACTIVE:
 		return ""
-	var names: Dictionary = current.get("place_names", {})
 	var text := ""
 	match stage:
 		"pickup":
@@ -173,13 +211,21 @@ func objective_text() -> String:
 
 ## World position of the current objective, or null when no mission is active.
 func objective_position() -> Variant:
-	if state != State.ACTIVE:
+	if state != State.ACTIVE and state != State.TO_START:
 		return null
 	return current["positions"].get(stage)
 
 
 func _physics_process(delta: float) -> void:
-	if state != State.ACTIVE or _car == null:
+	if _car == null:
+		return
+	if state == State.TO_START:
+		var meet: Vector3 = current["positions"][stage]
+		var cp := _car.global_position
+		if Vector2(cp.x - meet.x, cp.z - meet.z).length() <= REACH_RADIUS:
+			_play_intro()
+		return
+	if state != State.ACTIVE:
 		return
 	if time_left > 0.0:
 		time_left -= delta
@@ -244,7 +290,12 @@ func _show_marker() -> void:
 	var mat := StandardMaterial3D.new()
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.albedo_color = Color(0.2, 0.6, 1.0, 0.35) if stage == "pickup" else Color(1.0, 0.85, 0.1, 0.35)
+	if state == State.TO_START:
+		mat.albedo_color = Color(0.2, 0.9, 0.4, 0.35)  # green: meet the NPC
+	elif stage == "pickup":
+		mat.albedo_color = Color(0.2, 0.6, 1.0, 0.35)
+	else:
+		mat.albedo_color = Color(1.0, 0.85, 0.1, 0.35)
 	mesh.material = mat
 	_marker = MeshInstance3D.new()
 	_marker.name = "ObjectiveMarker"

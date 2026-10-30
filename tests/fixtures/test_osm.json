@@ -19,6 +19,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -37,6 +38,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -55,6 +57,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -73,6 +76,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2036186,
@@ -91,6 +95,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -109,6 +114,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2018093,
@@ -127,6 +133,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -145,6 +152,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2,
@@ -163,6 +171,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -181,6 +190,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.1981907,
@@ -199,6 +209,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -217,6 +228,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.1963814,
@@ -235,6 +247,7 @@
    "maxspeed_kmh": 40,
    "lanes": null,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.2054279,
@@ -253,6 +266,7 @@
    "maxspeed_kmh": 80,
    "lanes": 4,
    "oneway": false,
+   "connected": true,
    "points": [
     [
      25.1945721,
@@ -261,6 +275,26 @@
     [
      25.1945721,
      55.3059568
+    ]
+   ]
+  },
+  {
+   "id": "way/900",
+   "name": "Private Lane",
+   "highway": "service",
+   "maxspeed_kmh": 25,
+   "lanes": null,
+   "oneway": false,
+   "connected": false,
+   "private": true,
+   "points": [
+    [
+     25.2004523,
+     55.3000496
+    ],
+    [
+     25.1995477,
+     55.3000496
     ]
    ]
   }
@@ -393,8 +427,14 @@
    "id": "node/1",
    "name": "Test Fuel",
    "brand": "",
-   "lat": 25.2,
-   "lon": 55.3020849
+   "lat": 25.1997286,
+   "lon": 55.3020849,
+   "access": {
+    "lat": 25.2,
+    "lon": 55.3020849,
+    "road": "Test Avenue 3",
+    "snap_m": 30
+   }
   }
  ],
  "pois": [

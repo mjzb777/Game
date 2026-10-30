@@ -10,6 +10,7 @@ const STARTING_MONEY := 200
 var save_path := "user://save.json"
 var money: int = 0
 var completed: Dictionary = {}  # mission id -> number of completions
+var tickets: Array = []  # [{road, limit, speed, fine}] speeding tickets, newest last
 var current_district_id: String = ""
 
 
@@ -33,6 +34,18 @@ func spend_money(amount: int) -> bool:
 	return true
 
 
+## Fines are always charged, even into a negative balance (unpaid fines), like
+## the real ones. Refuelling needs a positive balance.
+func pay_fine(amount: int, record: Dictionary = {}) -> void:
+	money -= amount
+	if not record.is_empty():
+		tickets.append(record)
+		if tickets.size() > 50:
+			tickets = tickets.slice(tickets.size() - 50)
+	money_changed.emit(money)
+	save()
+
+
 func mark_completed(mission_id: String) -> void:
 	completed[mission_id] = times_completed(mission_id) + 1
 	save()
@@ -47,12 +60,13 @@ func save() -> void:
 	if f == null:
 		push_error("Cannot write save file %s" % save_path)
 		return
-	f.store_string(JSON.stringify({"money": money, "completed": completed}, "  "))
+	f.store_string(JSON.stringify({"money": money, "completed": completed, "tickets": tickets}, "  "))
 
 
 func load_save() -> void:
 	money = STARTING_MONEY
 	completed = {}
+	tickets = []
 	if not FileAccess.file_exists(save_path):
 		return
 	var data = JSON.parse_string(FileAccess.get_file_as_string(save_path))
@@ -61,12 +75,16 @@ func load_save() -> void:
 		var c = data.get("completed", {})
 		if c is Dictionary:
 			completed = c
+		var t = data.get("tickets", [])
+		if t is Array:
+			tickets = t
 	money_changed.emit(money)
 
 
 func reset_save() -> void:
 	money = STARTING_MONEY
 	completed = {}
+	tickets = []
 	save()
 	money_changed.emit(money)
 
