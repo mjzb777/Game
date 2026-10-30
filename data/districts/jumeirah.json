@@ -1,0 +1,327 @@
+{
+  "id": "jumeirah",
+  "name": "Jumeirah",
+  "bbox": {
+    "south": 25.2144,
+    "west": 55.2451,
+    "north": 25.2416,
+    "east": 55.2749
+  },
+  "spawn": {
+    "lat": 25.228,
+    "lon": 55.26,
+    "heading_deg": 0
+  },
+  "osm_file": "res://data/osm/jumeirah.json",
+  "missions": [
+    {
+      "id": "jum_01",
+      "type": "drive_to",
+      "title": "Open Doors",
+      "description": "Drive to {target}.",
+      "npc": "Guide Ahmed",
+      "dialogue": {
+        "intro": [
+          "Our cultural tour starts at {target}.",
+          "Please drive there to meet the group."
+        ],
+        "complete": [
+          "Welcome! The tour is about to begin."
+        ]
+      },
+      "reward": 220,
+      "target": {
+        "names": [
+          "Jumeirah Mosque"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=mosque"
+        ]
+      }
+    },
+    {
+      "id": "jum_02",
+      "type": "delivery",
+      "title": "Archive Photos",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Curator Hessa",
+      "dialogue": {
+        "intro": [
+          "A collector dropped off {item} at {pickup}.",
+          "Bring them to {dropoff} for the new exhibition."
+        ],
+        "complete": [
+          "These will look wonderful on the wall."
+        ]
+      },
+      "reward": 400,
+      "item": "framed archive photographs",
+      "pickup": {
+        "names": [
+          "Mercato Shopping Mall",
+          "Mercato Mall",
+          "Mercato"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Etihad Museum"
+        ],
+        "categories": [
+          "tourism=museum"
+        ]
+      }
+    },
+    {
+      "id": "jum_03",
+      "type": "timed",
+      "title": "Beach Sunset",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Dana",
+      "dialogue": {
+        "intro": [
+          "The sun is setting and I want the perfect photo.",
+          "Get to {target} in {time} seconds!"
+        ],
+        "complete": [
+          "Golden hour! Thank you!"
+        ]
+      },
+      "reward": 330,
+      "time_limit": 100,
+      "target": {
+        "names": [
+          "La Mer"
+        ],
+        "categories": [
+          "tourism=attraction",
+          "shop=mall",
+          "natural=beach",
+          "leisure=beach_resort"
+        ]
+      }
+    },
+    {
+      "id": "jum_04",
+      "type": "speed_limit",
+      "title": "Slow Through Jumeirah",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Officer Majid",
+      "dialogue": {
+        "intro": [
+          "There have been complaints about speeding.",
+          "Drive to {target} and show me you can stay under {limit} km/h."
+        ],
+        "complete": [
+          "Exemplary driving. Keep it up."
+        ]
+      },
+      "reward": 280,
+      "speed_limit_kmh": 40,
+      "target": {
+        "names": [
+          "Village Mall",
+          "The Village Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "jum_05",
+      "type": "delivery",
+      "title": "Book Club",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Amina",
+      "dialogue": {
+        "intro": [
+          "Our book club ordered {item}.",
+          "They are at {pickup}; bring them to {dropoff}."
+        ],
+        "complete": [
+          "Next month's reading is sorted!"
+        ]
+      },
+      "reward": 300,
+      "item": "boxes of books",
+      "pickup": {
+        "names": [
+          "Jumeirah Plaza"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Palm Strip",
+          "Palm Strip Mall"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "jum_06",
+      "type": "drive_to",
+      "title": "Swim Time",
+      "description": "Drive to {target}.",
+      "npc": "Max",
+      "dialogue": {
+        "intro": [
+          "The water is perfect today.",
+          "Let's go to {target}."
+        ],
+        "complete": [
+          "Last one in buys ice cream!"
+        ]
+      },
+      "reward": 180,
+      "target": {
+        "names": [
+          "Jumeirah Public Beach",
+          "Jumeirah Open Beach",
+          "Jumeirah Beach"
+        ],
+        "categories": [
+          "natural=beach",
+          "leisure=beach_resort"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "jum_07",
+      "type": "timed",
+      "title": "Closing Time",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Reem",
+      "dialogue": {
+        "intro": [
+          "My order is waiting at {target} and the shop closes soon.",
+          "You have {time} seconds!"
+        ],
+        "complete": [
+          "Got it right before the shutters came down."
+        ]
+      },
+      "reward": 350,
+      "time_limit": 80,
+      "target": {
+        "names": [
+          "Mercato Shopping Mall",
+          "Mercato Mall",
+          "Mercato"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "jum_08",
+      "type": "delivery",
+      "title": "Visitor Guides",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Guide Ahmed",
+      "dialogue": {
+        "intro": [
+          "We ran out of guidebooks.",
+          "The printer left {item} at {pickup}; bring them to {dropoff}."
+        ],
+        "complete": [
+          "The visitors can follow along now. Thank you!"
+        ]
+      },
+      "reward": 320,
+      "item": "a box of visitor guidebooks",
+      "pickup": {
+        "names": [
+          "La Mer"
+        ],
+        "categories": [
+          "tourism=attraction",
+          "shop=mall",
+          "natural=beach",
+          "leisure=beach_resort"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Jumeirah Mosque"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=mosque"
+        ]
+      }
+    },
+    {
+      "id": "jum_09",
+      "type": "speed_limit",
+      "title": "Delicate Exhibit",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Curator Hessa",
+      "dialogue": {
+        "intro": [
+          "This 1971 document is priceless.",
+          "Take it to {target}, never faster than {limit} km/h."
+        ],
+        "complete": [
+          "History is safe thanks to you."
+        ]
+      },
+      "reward": 450,
+      "speed_limit_kmh": 50,
+      "target": {
+        "names": [
+          "Etihad Museum"
+        ],
+        "categories": [
+          "tourism=museum"
+        ]
+      }
+    },
+    {
+      "id": "jum_10",
+      "type": "drive_to",
+      "title": "Karak Break",
+      "description": "Drive to {target}.",
+      "npc": "Bilal",
+      "dialogue": {
+        "intro": [
+          "Long day. I need a karak.",
+          "Let's stop at {target}."
+        ],
+        "complete": [
+          "Ahh, perfect. This one is on me."
+        ]
+      },
+      "reward": 150,
+      "target": {
+        "names": [
+          "Comptoir 102",
+          "Tim Hortons",
+          "Starbucks"
+        ],
+        "categories": [
+          "amenity=restaurant",
+          "amenity=cafe",
+          "amenity=fast_food"
+        ],
+        "allow_fallback": true
+      }
+    }
+  ]
+}

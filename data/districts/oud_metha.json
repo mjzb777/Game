@@ -1,0 +1,330 @@
+{
+  "id": "oud_metha",
+  "name": "Oud Metha",
+  "bbox": {
+    "south": 25.2214,
+    "west": 55.3021,
+    "north": 25.2486,
+    "east": 55.3319
+  },
+  "spawn": {
+    "lat": 25.235,
+    "lon": 55.317,
+    "heading_deg": 0
+  },
+  "osm_file": "res://data/osm/oud_metha.json",
+  "missions": [
+    {
+      "id": "oud_01",
+      "type": "drive_to",
+      "title": "Pyramid Shopping",
+      "description": "Drive to {target}.",
+      "npc": "Joanna",
+      "dialogue": {
+        "intro": [
+          "I heard there are pyramids in Dubai!",
+          "Take me to {target}."
+        ],
+        "complete": [
+          "Egyptian style in Dubai. Amazing!"
+        ]
+      },
+      "reward": 220,
+      "target": {
+        "names": [
+          "Wafi Mall",
+          "Wafi City",
+          "Wafi"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      }
+    },
+    {
+      "id": "oud_02",
+      "type": "delivery",
+      "title": "Hotel Luggage",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Bellboy Ravi",
+      "dialogue": {
+        "intro": [
+          "A guest left {item} at {pickup}.",
+          "They're staying at {dropoff}. Can you bring it?"
+        ],
+        "complete": [
+          "The guest gave you a big thank-you tip!"
+        ]
+      },
+      "reward": 380,
+      "item": "a suitcase",
+      "pickup": {
+        "names": [
+          "Lamcy Plaza"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Raffles Dubai"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "oud_03",
+      "type": "timed",
+      "title": "Last Metro",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Arjun",
+      "dialogue": {
+        "intro": [
+          "The last train leaves in a few minutes!",
+          "Get me to {target} in {time} seconds."
+        ],
+        "complete": [
+          "I can hear the train coming. Thanks!"
+        ]
+      },
+      "reward": 330,
+      "time_limit": 80,
+      "target": {
+        "names": [
+          "Oud Metha"
+        ],
+        "categories": [
+          "railway=station",
+          "public_transport=station"
+        ]
+      }
+    },
+    {
+      "id": "oud_04",
+      "type": "speed_limit",
+      "title": "Patient Transfer",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Nurse Grace",
+      "dialogue": {
+        "intro": [
+          "This patient was just discharged, but still sore.",
+          "Drive them to {target}, under {limit} km/h please."
+        ],
+        "complete": [
+          "Gentle and safe. Thank you."
+        ]
+      },
+      "reward": 300,
+      "speed_limit_kmh": 50,
+      "target": {
+        "names": [
+          "Rashid Hospital"
+        ],
+        "categories": [
+          "amenity=hospital",
+          "building=hospital"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "oud_05",
+      "type": "delivery",
+      "title": "Medical Supplies",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Dr. Nadia",
+      "dialogue": {
+        "intro": [
+          "A courier dropped {item} at {pickup}.",
+          "We need them at {dropoff} today."
+        ],
+        "complete": [
+          "The clinic can keep running. Thank you!"
+        ]
+      },
+      "reward": 400,
+      "item": "a cooler of medical supplies",
+      "pickup": {
+        "names": [
+          "Dubai Healthcare City"
+        ],
+        "categories": [
+          "railway=station",
+          "public_transport=station"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "American Hospital Dubai",
+          "American Hospital"
+        ],
+        "categories": [
+          "amenity=hospital",
+          "building=hospital"
+        ]
+      }
+    },
+    {
+      "id": "oud_06",
+      "type": "drive_to",
+      "title": "Sunday Mass",
+      "description": "Drive to {target}.",
+      "npc": "Maria",
+      "dialogue": {
+        "intro": [
+          "Mass starts soon.",
+          "Please take me to {target}."
+        ],
+        "complete": [
+          "Just in time. God bless you."
+        ]
+      },
+      "reward": 180,
+      "target": {
+        "names": [
+          "St. Mary's Catholic Church",
+          "St Mary's Catholic Church",
+          "Saint Mary's Catholic Church"
+        ],
+        "categories": [
+          "amenity=place_of_worship",
+          "building=church"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "oud_07",
+      "type": "timed",
+      "title": "Bowling Night",
+      "description": "Reach {target} within {time} seconds.",
+      "npc": "Faisal",
+      "dialogue": {
+        "intro": [
+          "Our lane at {target} is booked.",
+          "They'll give it away in {time} seconds!"
+        ],
+        "complete": [
+          "Strike! Thanks for the lift."
+        ]
+      },
+      "reward": 350,
+      "time_limit": 90,
+      "target": {
+        "names": [
+          "Al Nasr Leisureland",
+          "Al Nasr Leisure Land"
+        ],
+        "categories": [
+          "leisure=sports_centre",
+          "tourism=attraction",
+          "amenity=ice_rink",
+          "leisure=ice_rink"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "oud_08",
+      "type": "delivery",
+      "title": "Birthday Cake",
+      "description": "Pick up {item} at {pickup} and deliver it to {dropoff}.",
+      "npc": "Leena",
+      "dialogue": {
+        "intro": [
+          "The bakery at {pickup} has {item} ready.",
+          "The party is at {dropoff}."
+        ],
+        "complete": [
+          "Happy birthday to everyone! You're invited."
+        ]
+      },
+      "reward": 320,
+      "item": "a birthday cake",
+      "pickup": {
+        "names": [
+          "Wafi Mall",
+          "Wafi City",
+          "Wafi"
+        ],
+        "categories": [
+          "shop=mall",
+          "shop=department_store"
+        ]
+      },
+      "dropoff": {
+        "names": [
+          "Grand Hyatt Dubai",
+          "Grand Hyatt"
+        ],
+        "categories": [
+          "tourism=hotel",
+          "building=hotel"
+        ]
+      }
+    },
+    {
+      "id": "oud_09",
+      "type": "speed_limit",
+      "title": "School Run",
+      "description": "Drive to {target} without going over {limit} km/h.",
+      "npc": "Mr. Thomas",
+      "dialogue": {
+        "intro": [
+          "Drop these exam papers at {target}.",
+          "School zone - stay under {limit} km/h."
+        ],
+        "complete": [
+          "Papers delivered, students safe. Thank you."
+        ]
+      },
+      "reward": 260,
+      "speed_limit_kmh": 40,
+      "target": {
+        "names": [
+          "Indian High School",
+          "The Indian High School"
+        ],
+        "categories": [
+          "amenity=school",
+          "building=school"
+        ],
+        "allow_fallback": true
+      }
+    },
+    {
+      "id": "oud_10",
+      "type": "drive_to",
+      "title": "Lunch Break",
+      "description": "Drive to {target}.",
+      "npc": "Sameer",
+      "dialogue": {
+        "intro": [
+          "I'm craving a proper lunch.",
+          "Let's go to {target}."
+        ],
+        "complete": [
+          "Delicious. Good choice of driver!"
+        ]
+      },
+      "reward": 150,
+      "target": {
+        "names": [
+          "Wafi Gourmet"
+        ],
+        "categories": [
+          "amenity=restaurant",
+          "amenity=cafe",
+          "amenity=fast_food"
+        ],
+        "allow_fallback": true
+      }
+    }
+  ]
+}

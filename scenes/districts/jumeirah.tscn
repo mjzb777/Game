@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/world/district.gd" id="1_district"]
+
+[node name="Jumeirah" type="Node3D"]
+script = ExtResource("1_district")
+district_id = "jumeirah"

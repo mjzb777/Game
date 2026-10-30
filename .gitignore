@@ -1,0 +1,7 @@
+# Godot
+.godot/
+*.import
+export_presets.cfg
+# Raw Overpass downloads (large); the converted data/osm/*.json is committed
+data/osm_raw/
+__pycache__/
